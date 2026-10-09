@@ -6,124 +6,188 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>არსად — ვასიკო ზუმბაძე</title>
 <meta name="description" content="არსად — ვასიკო ზუმბაძის მეტაფიზიკური რომანი. შექმნა, ნგრევა და დაბრუნება.">
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Georgian:wght@300;400;500;600;700&family=Noto+Sans+Georgian:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Georgian:wght@300;400;500;600&family=Noto+Sans+Georgian:wght@300;400;500&display=swap" rel="stylesheet">
 
 <style>
-:root {
-  --black:#070605;
+:root{
+  --black:#070706;
   --paper:#e9e0d4;
-  --muted:#a49a8e;
-  --ember:#ff6a32;
-  --red:#9d211b;
-  --gold:#d5a16c;
+  --muted:#b2a79b;
+  --ember:#f07848;
+  --red:#9b3023;
+  --ice:#dce9f5;
   --serif:"Noto Serif Georgian",serif;
   --sans:"Noto Sans Georgian",sans-serif;
 }
+
 *{box-sizing:border-box}
-html{scroll-behavior:smooth;background:var(--black)}
+html{background:var(--black);scroll-behavior:smooth}
 body{
   margin:0;background:var(--black);color:var(--paper);
   font-family:var(--serif);overflow-x:hidden;
 }
-::selection{background:#9d211b;color:#fff3e8}
+::selection{background:#873023;color:#fff}
 a{color:inherit;text-decoration:none}
 button,input,textarea{font:inherit}
 button{color:inherit}
+
 #embers{
   position:fixed;inset:0;width:100%;height:100%;
-  pointer-events:none;z-index:5;opacity:.82;
+  pointer-events:none;z-index:5;
 }
+.snow-layer{
+  position:fixed;inset:0;overflow:hidden;
+  pointer-events:none;z-index:6;
+}
+.snowflake{
+  position:absolute;top:-20px;border-radius:50%;
+  background:#e8f1fc;
+  box-shadow:0 0 8px #dceaff85;
+  opacity:0;
+  animation:snowfall linear infinite;
+}
+@keyframes snowfall{
+  0%{transform:translate3d(0,-5vh,0);opacity:0}
+  12%{opacity:.7}
+  50%{transform:translate3d(35px,50vh,0);opacity:.8}
+  88%{opacity:.5}
+  100%{transform:translate3d(-25px,110vh,0);opacity:0}
+}
+
 .heat{
-  position:fixed;inset:auto -15% -32vh;width:130%;height:62vh;
-  pointer-events:none;z-index:1;
+  position:fixed;inset:auto -15% -28vh;width:130%;height:68vh;
+  z-index:1;pointer-events:none;filter:blur(22px);
   background:
-    radial-gradient(ellipse at 18% 100%,#a72a12aa 0,transparent 44%),
-    radial-gradient(ellipse at 50% 110%,#ed572344 0,transparent 48%),
-    radial-gradient(ellipse at 85% 100%,#a42b13aa 0,transparent 43%);
-  filter:blur(24px);animation:heat 7s ease-in-out infinite alternate;
+    radial-gradient(ellipse at 17% 100%,#a72a12bd,transparent 44%),
+    radial-gradient(ellipse at 50% 110%,#ed572355,transparent 48%),
+    radial-gradient(ellipse at 85% 100%,#a42b13a8,transparent 43%),
+    radial-gradient(ellipse at 55% 100%,#cfe5f326,transparent 55%);
+  animation:heat 7s ease-in-out infinite alternate;
 }
 .heat:before,.heat:after{
   content:"";position:absolute;bottom:0;width:100%;height:100%;
-  background:linear-gradient(0deg,#7b180d99,transparent 70%);
+  background:linear-gradient(0deg,#79190ddd,transparent 75%);
   clip-path:polygon(0 100%,0 72%,5% 58%,9% 80%,15% 39%,20% 72%,26% 50%,31% 81%,37% 28%,43% 75%,49% 43%,55% 83%,62% 31%,68% 74%,73% 47%,79% 80%,85% 35%,91% 71%,96% 49%,100% 78%,100% 100%);
-  transform-origin:bottom;animation:flame 2.4s ease-in-out infinite alternate;
+  transform-origin:bottom;
+  animation:flame 2.4s ease-in-out infinite alternate;
 }
-.heat:after{opacity:.7;filter:blur(14px);animation-duration:3.1s;animation-direction:alternate-reverse}
-@keyframes heat{from{transform:translateY(1vh) scaleX(1)}to{transform:translateY(-2vh) scaleX(1.04)}}
-@keyframes flame{from{transform:scaleY(.83) skewX(1deg)}to{transform:scaleY(1.12) skewX(-1deg)}}
+.heat:after{
+  opacity:.65;filter:blur(15px);
+  animation-duration:3.2s;animation-direction:alternate-reverse;
+}
+@keyframes heat{
+  from{transform:translateY(1vh) scaleX(1)}
+  to{transform:translateY(-2vh) scaleX(1.04)}
+}
+@keyframes flame{
+  from{transform:scaleY(.82) skewX(1deg)}
+  to{transform:scaleY(1.13) skewX(-1deg)}
+}
+.cold-haze{
+  position:fixed;inset:0;z-index:1;pointer-events:none;
+  background:
+    radial-gradient(ellipse at 8% 25%,#a8d5ff0b,transparent 35%),
+    radial-gradient(ellipse at 90% 45%,#c5e5ff12,transparent 38%);
+  animation:coldGlow 12s ease-in-out infinite alternate;
+}
+@keyframes coldGlow{
+  from{opacity:.3;transform:translateX(-1%)}
+  to{opacity:1;transform:translateX(1%)}
+}
+
 main,.site-header,footer{position:relative;z-index:2}
 .site-header{
   position:absolute;top:0;left:0;width:100%;padding:27px 6vw;
   display:flex;justify-content:space-between;align-items:center;gap:20px;
   z-index:10;
 }
-.brand{font-size:14px;letter-spacing:.22em;color:#f0dfcd}
+.brand{font-size:15px;letter-spacing:.2em;color:#f0dfcd}
 .nav{display:flex;gap:25px;align-items:center;font:11px var(--sans);color:#b7aa9b}
 .nav a{transition:color .3s}
 .nav a:hover{color:var(--ember)}
 .nav .buy-link{color:#f4b37d}
-.menu-button{display:none;background:none;border:0;font-size:23px}
 .hero{
   min-height:100svh;position:relative;display:flex;align-items:center;
   justify-content:center;text-align:center;padding:110px 20px 100px;overflow:hidden;
-}
-.hero:before{
-  content:"";position:absolute;inset:0;
   background:
-    radial-gradient(ellipse at 50% 50%,#6d1c1240 0,transparent 30%),
-    radial-gradient(ellipse at 50% 110%,#b32e1438 0,transparent 52%),
-    linear-gradient(180deg,#050403 0%,#0b0706 62%,#110705 100%);
+    radial-gradient(ellipse at 50% 50%,#6d1c1233,transparent 32%),
+    radial-gradient(ellipse at 50% 110%,#b32e1435,transparent 52%),
+    linear-gradient(180deg,#050403,#0b0706 65%,#110705);
+}
+.hero:after{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background:
+    radial-gradient(ellipse at 12% 20%,#c8e6ff0b,transparent 32%),
+    radial-gradient(ellipse at 85% 65%,#e6f4ff10,transparent 35%);
+  animation:coldGlow 12s ease-in-out infinite alternate;
 }
 .hero-content{position:relative;z-index:3;max-width:900px}
-.overline{font:10px var(--sans);letter-spacing:.38em;color:#c68b63;text-transform:uppercase}
+.overline{font:10px var(--sans);letter-spacing:.38em;color:#c68b63}
 .hero h1{
-  margin:35px 0 12px;font-size:clamp(74px,15vw,190px);font-weight:300;
-  line-height:1.05;letter-spacing:.07em;
+  margin:35px 0 12px;font-size:clamp(74px,15vw,190px);
+  font-weight:300;line-height:1.05;letter-spacing:.07em;
   text-shadow:0 0 35px #c13b1835,0 0 100px #8f1d1530;
 }
-.hero-subtitle{font-size:clamp(13px,2vw,18px);color:#c5b5a4;font-weight:300;letter-spacing:.13em}
+.hero-subtitle{
+  font-size:clamp(13px,2vw,18px);color:#c5b5a4;
+  font-weight:300;letter-spacing:.13em;
+}
 .hero-line{
   width:1px;height:80px;margin:44px auto 24px;
-  background:linear-gradient(transparent,#c65a32,#f5b17b,transparent);
+  background:linear-gradient(transparent,#c65a32,#f5b17b,#d8e7f4,transparent);
   transform-origin:top;animation:lineGlow 3s ease-in-out infinite;
 }
-@keyframes lineGlow{0%,100%{opacity:.4;transform:scaleY(.8)}50%{opacity:1;transform:scaleY(1.12)}}
+@keyframes lineGlow{
+  0%,100%{opacity:.4;transform:scaleY(.8)}
+  50%{opacity:1;transform:scaleY(1.12)}
+}
 .hero-quote{font-size:clamp(16px,2.4vw,23px);font-weight:300;line-height:2;color:#e3c9b0}
-.scroll-cue{margin-top:58px;font:9px var(--sans);letter-spacing:.3em;color:#8f7767}
-.scroll-cue span{display:block;margin-top:13px;color:var(--ember);font-size:18px;animation:down 2s infinite}
-@keyframes down{0%,100%{transform:translateY(0)}50%{transform:translateY(7px)}}
+.scroll-cue{margin-top:58px;font:9px var(--sans);letter-spacing:.3em;color:#9c897b}
+.scroll-cue span{
+  display:block;margin-top:13px;color:var(--ember);font-size:18px;
+  animation:down 2s infinite;
+}
+@keyframes down{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(7px)}
+}
 
-/* კოსმოსური წრებრუნვა */
+/* კოსმოსური ორბიტები */
 .cosmos{
   position:absolute;width:min(83vw,760px);aspect-ratio:1;border-radius:50%;
-  left:50%;top:50%;transform:translate(-50%,-50%);opacity:.55;
-  pointer-events:none;
+  left:50%;top:50%;transform:translate(-50%,-50%);
+  opacity:.55;pointer-events:none;
 }
 .cosmos:before,.cosmos:after{
   content:"";position:absolute;border-radius:50%;inset:4%;
-  background:conic-gradient(from 0deg,transparent,#70211650,transparent,#e77c3b4a,transparent,#74201655,transparent);
+  background:conic-gradient(from 0deg,transparent,#70211650,transparent,#e77c3b4a,transparent,#d7e9f54a,transparent);
   mask:radial-gradient(transparent 60%,#000 60.5%,#000 61%,transparent 61.5%);
   animation:orbit 45s linear infinite;
 }
 .cosmos:after{
-  inset:17%;transform:rotate(30deg);
-  background:conic-gradient(from 90deg,transparent,#e8b98c70,transparent,#9c382d55,transparent);
+  inset:17%;
+  background:conic-gradient(from 90deg,transparent,#e8b98c70,transparent,#a9d4f455,transparent,#9c382d55,transparent);
   mask:radial-gradient(transparent 66%,#000 66.4%,#000 66.8%,transparent 67.2%);
   animation:orbitBack 33s linear infinite;
 }
 .orbit{
-  position:absolute;inset:9%;border:1px solid #d7895640;border-radius:50%;
-  transform:rotate(-26deg) scaleY(.48);
+  position:absolute;inset:9%;border:1px solid #d7895640;
+  border-radius:50%;transform:rotate(-26deg) scaleY(.48);
 }
 .orbit.two{inset:15%;transform:rotate(54deg) scaleY(.62);border-color:#8c332e55}
-.orbit.three{inset:2%;transform:rotate(76deg) scaleY(.27);border-color:#e1a16a35}
+.orbit.three{inset:2%;transform:rotate(76deg) scaleY(.27);border-color:#d4e7f435}
 .star{
-  position:absolute;width:5px;height:5px;border-radius:50%;background:#ffb777;
-  box-shadow:0 0 14px 5px #e65a2c66;left:50%;top:8%;
-  transform-origin:0 330px;animation:starOrbit 17s linear infinite;
+  position:absolute;width:5px;height:5px;border-radius:50%;
+  background:#ffb777;box-shadow:0 0 14px 5px #e65a2c66;
+  left:50%;top:8%;transform-origin:0 330px;
+  animation:starOrbit 17s linear infinite;
 }
-.star.s2{width:3px;height:3px;top:22%;transform-origin:0 210px;animation-duration:12s;animation-direction:reverse}
+.star.s2{
+  width:3px;height:3px;top:22%;transform-origin:0 210px;
+  animation-duration:12s;animation-direction:reverse;
+}
 .star.s3{top:36%;transform-origin:0 120px;animation-duration:8s}
 @keyframes orbit{to{transform:rotate(360deg)}}
 @keyframes orbitBack{to{transform:rotate(-360deg)}}
@@ -131,11 +195,12 @@ main,.site-header,footer{position:relative;z-index:2}
 
 section{position:relative;padding:125px 7vw;overflow:hidden}
 .section-kicker{
-  color:#c67d55;font:10px var(--sans);letter-spacing:.32em;text-transform:uppercase;
-  margin-bottom:23px;
+  color:#c67d55;font:10px var(--sans);letter-spacing:.32em;
+  text-transform:uppercase;margin-bottom:23px;
 }
 .section-title{font-size:clamp(29px,5vw,57px);font-weight:300;line-height:1.45;margin:0}
 .section-intro{max-width:700px;font-size:15px;line-height:2.25;color:#c6b9ab;font-weight:300}
+
 .origin{max-width:1000px;margin:auto;text-align:center}
 .origin .section-intro{margin:35px auto}
 .origin-statement{
@@ -147,21 +212,24 @@ section{position:relative;padding:125px 7vw;overflow:hidden}
   width:100%;height:130px;position:relative;overflow:hidden;margin:55px 0 0;
   mask-image:linear-gradient(90deg,transparent,#000 20%,#000 80%,transparent);
 }
-.breath:before{
+.breath:before,.breath:after{
   content:"";position:absolute;left:-10%;top:50%;width:120%;height:90px;
   border-radius:50%;border-top:1px solid #d45b374d;
-  box-shadow:0 -8px 35px #962d1a14;transform:rotate(-4deg);
-  animation:wave 8s ease-in-out infinite alternate;
+  transform:rotate(-4deg);animation:wave 8s ease-in-out infinite alternate;
 }
 .breath:after{
-  content:"";position:absolute;left:10%;top:45%;width:80%;height:70px;
-  border-radius:50%;border-top:1px solid #e8a46a44;transform:rotate(5deg);
-  animation:wave 6s ease-in-out infinite alternate-reverse;
+  left:10%;top:45%;width:80%;height:70px;border-color:#c7e0f34a;
+  transform:rotate(5deg);animation-duration:6s;animation-direction:alternate-reverse;
 }
-@keyframes wave{from{transform:translateY(10px) rotate(-5deg) scaleX(.92)}to{transform:translateY(-12px) rotate(4deg) scaleX(1.05)}}
+@keyframes wave{
+  from{transform:translateY(10px) rotate(-5deg) scaleX(.92)}
+  to{transform:translateY(-12px) rotate(4deg) scaleX(1.05)}
+}
 
 .cycle-section{
-  background:radial-gradient(ellipse at 50% 50%,#28100b 0,transparent 64%);
+  background:
+    radial-gradient(ellipse at 50% 50%,#28100b 0,transparent 64%),
+    radial-gradient(ellipse at 15% 70%,#9fcbe90a,transparent 40%);
 }
 .cycle-wrap{max-width:1100px;margin:auto}
 .cycle-heading{text-align:center;margin-bottom:60px}
@@ -171,24 +239,26 @@ section{position:relative;padding:125px 7vw;overflow:hidden}
 }
 .cycle-wheel:before{
   content:"";position:absolute;inset:1%;border-radius:50%;
-  background:conic-gradient(from 0deg,transparent,#b94a2d75,#f5bd7a90,transparent,#7e201d90,transparent);
+  background:conic-gradient(from 0deg,transparent,#b94a2d75,#f5bd7a90,transparent,#bcdcfb70,transparent,#7e201d90,transparent);
   mask:radial-gradient(transparent 63%,#000 64%,#000 64.6%,transparent 65.5%);
   animation:orbit 26s linear infinite;
 }
 .cycle-wheel:after{
   content:"";position:absolute;inset:12%;border-radius:50%;
-  border:1px solid #b85a3d32;box-shadow:inset 0 0 60px #a4381c15,0 0 70px #a4381c12;
+  border:1px solid #b85a3d32;
+  box-shadow:inset 0 0 60px #a4381c15,0 0 70px #a4381c12;
 }
-.cycle-core{
-  position:relative;z-index:2;text-align:center;max-width:65%;
-}
+.cycle-core{position:relative;z-index:2;text-align:center;max-width:65%}
 .cycle-core .small{font:9px var(--sans);letter-spacing:.3em;color:#c78560}
-.cycle-core strong{display:block;font-size:clamp(23px,4vw,40px);font-weight:300;margin:17px 0;letter-spacing:.1em}
+.cycle-core strong{
+  display:block;font-size:clamp(23px,4vw,40px);font-weight:300;
+  margin:17px 0;letter-spacing:.1em;
+}
 .cycle-core p{font-size:12px;line-height:2;color:#b5a294}
 .cycle-node{
-  position:absolute;z-index:3;width:105px;height:105px;display:grid;place-items:center;
-  text-align:center;border-radius:50%;font-size:13px;font-weight:300;
-  background:radial-gradient(circle,#2a100b 0,#110806 70%,transparent 100%);
+  position:absolute;z-index:3;width:105px;height:105px;display:grid;
+  place-content:center;text-align:center;border-radius:50%;font-size:13px;
+  font-weight:300;background:radial-gradient(circle,#2a100b, #110806 70%,transparent);
   color:#e8c5a6;text-shadow:0 0 18px #e65a2c33;
 }
 .cycle-node:nth-of-type(1){top:0;left:50%;transform:translateX(-50%)}
@@ -200,103 +270,106 @@ section{position:relative;padding:125px 7vw;overflow:hidden}
 .cycle-words h3{font-weight:400;font-size:19px;color:#edc5a1;margin-bottom:15px}
 .cycle-words p{font-size:13px;line-height:2.1;color:#b9aa9c}
 .cycle-words article:nth-child(2) h3{color:#e98158}
-.cycle-words article:nth-child(3) h3{color:#d7a56f}
+.cycle-words article:nth-child(3) h3{color:#d7c5b0}
 
 .characters{max-width:1200px;margin:auto}
 .character-heading{max-width:700px;margin-bottom:65px}
 .character{
   display:grid;grid-template-columns:minmax(180px,.7fr) minmax(0,1.3fr);
   gap:clamp(30px,8vw,100px);align-items:center;padding:45px 0;
-  position:relative;
 }
 .character+.character{margin-top:25px}
 .character:nth-of-type(even){grid-template-columns:minmax(0,1.3fr) minmax(180px,.7fr)}
 .character:nth-of-type(even) .symbol{order:2}
 .symbol{
-  min-height:270px;display:grid;place-items:center;position:relative;
-  color:#d77a52;
+  min-height:270px;display:grid;place-items:center;position:relative;color:#d77a52;
 }
 .symbol:before{
   content:"";position:absolute;width:220px;height:220px;border-radius:50%;
   background:radial-gradient(circle,#9e301b20,transparent 70%);
   animation:symbolBreath 6s ease-in-out infinite alternate;
 }
-@keyframes symbolBreath{from{transform:scale(.8);opacity:.5}to{transform:scale(1.15);opacity:1}}
-.symbol svg{position:relative;width:min(100%,205px);height:220px;overflow:visible;filter:drop-shadow(0 0 18px #c2472420)}
-.symbol svg path,.symbol svg line,.symbol svg ellipse,.symbol svg circle,.symbol svg polyline{
-  vector-effect:non-scaling-stroke;
+@keyframes symbolBreath{
+  from{transform:scale(.8);opacity:.5}
+  to{transform:scale(1.15);opacity:1}
+}
+.symbol svg{
+  position:relative;width:min(100%,205px);height:220px;overflow:visible;
+  filter:drop-shadow(0 0 18px #c2472420);
 }
 .lily svg{animation:sway 7s ease-in-out infinite;transform-origin:50% 100%}
-@keyframes sway{0%,100%{transform:rotate(-2deg)}50%{transform:rotate(2deg)}}
+@keyframes sway{
+  0%,100%{transform:rotate(-2deg)}
+  50%{transform:rotate(2deg)}
+}
 .sword svg{filter:drop-shadow(0 0 12px #c9a17b22);animation:swordPulse 5s ease-in-out infinite}
-@keyframes swordPulse{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+@keyframes swordPulse{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-5px)}
+}
 .snake svg{animation:snakeSway 6s ease-in-out infinite}
-@keyframes snakeSway{0%,100%{transform:rotate(-2deg)}50%{transform:rotate(3deg)}}
+@keyframes snakeSway{
+  0%,100%{transform:rotate(-2deg)}
+  50%{transform:rotate(3deg)}
+}
 .character .name{font-size:clamp(31px,4vw,48px);font-weight:300;margin:0 0 17px}
 .character .role{font:10px var(--sans);letter-spacing:.23em;color:#c67b53;margin-bottom:25px}
 .character .description{max-width:600px;color:#c2b4a6;font-size:14px;line-height:2.25;font-weight:300}
 .character:nth-of-type(2) .role{color:#e1b58d}
 .character:nth-of-type(3) .role{color:#c96a52}
 
-.quotes{padding-top:95px;padding-bottom:110px;background:radial-gradient(ellipse at 50% 50%,#1b0b08 0,transparent 70%)}
-.quotes-inner{max-width:1000px;margin:auto}
-.quotes-heading{text-align:center;margin-bottom:60px}
-.quote-flow{display:grid;grid-template-columns:1fr 1fr;column-gap:clamp(25px,8vw,100px);row-gap:58px;align-items:center}
-.quote{
-  position:relative;padding:8px 0 8px 22px;border-left:1px solid #a8472c75;
-  font-size:clamp(16px,2.1vw,22px);font-weight:300;line-height:2;color:#e9d5c0;
-  transition:transform .5s ease,color .5s ease;
+/* თავები — სამი თანაბარი სვეტი */
+.chapters-section{
+  background:
+    radial-gradient(ellipse at 50% 0%,#30130c2e,transparent 48%),
+    linear-gradient(180deg,transparent,#100705 20%,#0d0705 80%,transparent);
 }
-.quote:nth-child(even){transform:translateY(30px);border-left-color:#d39b6555}
-.quote:hover{transform:translateY(-3px);color:#fff0df}
-.quote:nth-child(even):hover{transform:translateY(24px)}
-.quote:before{
-  content:"";position:absolute;left:-2px;top:0;height:28px;width:3px;
-  background:linear-gradient(transparent,#e57b4c,transparent);
+.chapters-wrap{max-width:1200px;margin:auto}
+.chapters-top{
+  display:flex;justify-content:space-between;gap:35px;
+  align-items:end;margin-bottom:45px;
 }
-.quote .quote-mark{display:block;font-size:40px;line-height:1;color:#bb5a39;margin-bottom:15px;opacity:.7}
-.quote small{display:block;font:9px var(--sans);letter-spacing:.2em;color:#8d7665;margin-top:18px}
-
-.chapters-section{background:linear-gradient(180deg,transparent,#100705 20%,#0d0705 80%,transparent)}
-.chapters-wrap{max-width:1100px;margin:auto}
-.chapters-top{display:flex;justify-content:space-between;gap:35px;align-items:end;margin-bottom:45px}
-.chapters-top .intro{max-width:570px}
+.chapters-top .intro{max-width:650px}
 .chapters-top .intro p{font-size:13px;line-height:2;color:#b5a597}
 .purchase{
   flex-shrink:0;display:inline-flex;align-items:center;gap:13px;
-  padding:15px 20px;color:#f0bc92;font:11px var(--sans);letter-spacing:.05em;
+  padding:15px 20px;color:#f0bc92;font:11px var(--sans);
   background:linear-gradient(120deg,#46170f99,#1a0b07aa);
   border:1px solid #b45b3b55;transition:background .3s,transform .3s;
 }
 .purchase:hover{background:#5b2015;transform:translateY(-2px)}
 .purchase span{font-size:17px}
-.chapter-groups{display:grid;grid-template-columns:1fr 1fr;gap:45px 70px}
+.chapter-groups{
+  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:35px;align-items:start;
+}
 .chapter-group h3{
-  font-size:17px;font-weight:400;color:#d7a57d;margin:0 0 23px;
-  padding-bottom:12px;
+  font-size:15px;line-height:1.8;font-weight:400;color:#d7a57d;
+  margin:0 0 20px;
 }
 .chapter-list{list-style:none;padding:0;margin:0}
 .chapter-list li{margin:0}
 .chapter-button{
-  width:100%;display:flex;justify-content:space-between;align-items:baseline;gap:18px;
-  padding:11px 0;background:none;border:0;text-align:left;cursor:pointer;
-  color:#c6b9ac;font-size:13px;line-height:1.9;font-weight:300;
+  width:100%;display:flex;justify-content:space-between;align-items:baseline;gap:8px;
+  padding:9px 0;background:none;border:0;text-align:left;cursor:pointer;
+  color:#c6b9ac;font-size:12px;line-height:1.9;font-weight:300;
   transition:color .25s,padding .25s;
 }
-.chapter-button:hover{color:#f5b17b;padding-left:7px}
-.chapter-button .chapter-num{color:#85513b;font:10px var(--sans);min-width:36px}
+.chapter-button:hover{color:#f5b17b;padding-left:5px}
+.chapter-button .chapter-num{color:#85513b;font:10px var(--sans);min-width:31px}
 .chapter-button .chapter-name{flex:1}
-.chapter-button .plus{font:16px var(--sans);color:#99563c;transition:transform .3s}
+.chapter-button .plus{font:15px var(--sans);color:#99563c;transition:transform .3s}
 .chapter-button[aria-expanded="true"] .plus{transform:rotate(45deg);color:#f2a16b}
 .chapter-content{
-  display:none;padding:0 0 18px 36px;color:#a99a8d;
-  font-size:12px;line-height:2;
+  display:none;padding:0 0 16px 31px;color:#a99a8d;font-size:12px;line-height:2;
 }
-.chapter-content.open{display:block;animation:appear .45s ease}
-@keyframes appear{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+.chapter-content.open{display:block;animation:appear .4s ease}
+@keyframes appear{
+  from{opacity:0;transform:translateY(6px)}
+  to{opacity:1;transform:translateY(0)}
+}
 .chapter-content .read-note{font-style:italic;color:#8e7b6b}
-.chapter-content a{display:inline-block;margin-top:10px;color:#e6a273;font-size:11px}
-.purchase-note{font:10px var(--sans);color:#826f60;line-height:1.9;margin-top:15px}
+.purchase-note{font:10px var(--sans);color:#826f60;line-height:1.9;margin-top:18px}
 
 .feedback{max-width:900px;margin:auto}
 .feedback-layout{display:grid;grid-template-columns:.8fr 1.2fr;gap:65px;align-items:start}
@@ -318,6 +391,7 @@ section{position:relative;padding:125px 7vw;overflow:hidden}
 }
 .send:hover{background:#4b1b12;border-color:#c66a45}
 .form-note{font:10px var(--sans);color:#8b796a;line-height:1.9}
+
 footer{
   text-align:center;padding:75px 20px 50px;
   background:linear-gradient(180deg,transparent,#0b0504);
@@ -326,17 +400,16 @@ footer{
 .footer-line{font-size:13px;line-height:2;color:#a58d7a;margin:18px auto 30px}
 .copyright{font:9px var(--sans);letter-spacing:.16em;color:#6e5a4d}
 
-.reveal{opacity:0;transform:translateY(24px);transition:opacity 1s ease,transform 1s cubic-bezier(.2,.7,.2,1)}
-.reveal.visible{opacity:1;transform:translateY(0)}
-@media(prefers-reduced-motion:reduce){
-  *,*:before,*:after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.01ms!important}
-  .reveal{opacity:1;transform:none}
+.reveal{
+  opacity:0;transform:translateY(24px);
+  transition:opacity 1s ease,transform 1s cubic-bezier(.2,.7,.2,1);
 }
+.reveal.visible{opacity:1;transform:translateY(0)}
+
 @media(max-width:760px){
   .site-header{padding:20px 6vw}
   .nav{gap:13px}
   .nav a:not(.buy-link){display:none}
-  .menu-button{display:block}
   .hero{min-height:92svh}
   .cosmos{width:110vw}
   section{padding:90px 7vw}
@@ -349,18 +422,29 @@ footer{
   .symbol{min-height:190px}
   .symbol svg{height:180px}
   .character .description{max-width:none}
-  .quote-flow{grid-template-columns:1fr;row-gap:36px}
-  .quote:nth-child(even),.quote:nth-child(even):hover{transform:none}
   .chapters-top{align-items:start;flex-direction:column}
-  .chapter-groups{grid-template-columns:1fr;gap:35px}
+  .chapter-groups{grid-template-columns:repeat(2,minmax(0,1fr));gap:25px 20px}
   .feedback-layout{grid-template-columns:1fr;gap:30px}
+}
+@media(max-width:480px){
+  .chapter-groups{grid-template-columns:1fr}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*:before,*:after{
+    animation-duration:.01ms!important;animation-iteration-count:1!important;
+    scroll-behavior:auto!important;transition-duration:.01ms!important;
+  }
+  .reveal{opacity:1;transform:none}
+  .snow-layer{display:none}
 }
 </style>
 </head>
 
 <body>
 <canvas id="embers" aria-hidden="true"></canvas>
+<div class="snow-layer" id="snow-layer" aria-hidden="true"></div>
 <div class="heat" aria-hidden="true"></div>
+<div class="cold-haze" aria-hidden="true"></div>
 
 <header class="site-header">
   <a class="brand" href="#home">არსად</a>
@@ -376,7 +460,9 @@ footer{
 <main>
 <section class="hero" id="home">
   <div class="cosmos" aria-hidden="true">
-    <div class="orbit"></div><div class="orbit two"></div><div class="orbit three"></div>
+    <div class="orbit"></div>
+    <div class="orbit two"></div>
+    <div class="orbit three"></div>
     <i class="star"></i><i class="star s2"></i><i class="star s3"></i>
   </div>
   <div class="hero-content">
@@ -417,7 +503,7 @@ footer{
       <div class="section-kicker">კოსმოსური კანონი</div>
       <h2 class="section-title">არც დასაწყისი. არც დასასრული.</h2>
     </div>
-    <div class="cycle-wheel reveal" aria-label="შექმნის, ნგრევისა და დაბრუნების სიმბოლო">
+    <div class="cycle-wheel reveal">
       <div class="cycle-node">შექმნა<small>დაბადება</small></div>
       <div class="cycle-node">ნგრევა<small>დაშლა</small></div>
       <div class="cycle-node">დაბრუნება<small>ხელახლა</small></div>
@@ -449,12 +535,15 @@ footer{
     <div class="character-heading reveal">
       <div class="section-kicker">ხორცი და სიმბოლო</div>
       <h2 class="section-title">ისინი, ვინც კანონს ეჯახებიან.</h2>
-      <p class="section-intro">სამი გზა, სამი ნება და უხილავი ძალა, რომლის არსებობაც შეიძლება მხოლოდ მაშინ გახდეს ცხადი, როცა მის წინააღმდეგ ბრძოლას დაიწყებ.</p>
+      <p class="section-intro">
+        სამი გზა, სამი ნება და უხილავი ძალა, რომლის არსებობაც შეიძლება მხოლოდ მაშინ
+        გახდეს ცხადი, როცა მის წინააღმდეგ ბრძოლას დაიწყებ.
+      </p>
     </div>
 
     <article class="character reveal">
-      <div class="symbol lily" aria-label="შროშანი — ლილის სიმბოლო">
-        <svg viewBox="0 0 180 220" fill="none" role="img" aria-label="შროშანის ხაზოვანი ილუსტრაცია">
+      <div class="symbol lily">
+        <svg viewBox="0 0 180 220" fill="none" role="img" aria-label="შროშანი">
           <g stroke="#e1a477" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round">
             <path d="M91 199 C89 165 92 128 90 85"/>
             <path d="M90 161 C66 143 49 146 38 160 C57 171 76 173 90 161Z" fill="#6b2b20" fill-opacity=".35"/>
@@ -468,10 +557,6 @@ footer{
             <path d="M90 90 C76 86 63 74 59 61 M90 90 C105 80 115 65 118 53"/>
             <path d="M90 90 L90 112 M84 105 L90 112 L96 105"/>
             <circle cx="90" cy="89" r="4" fill="#f1c08c" stroke="#f1c08c"/>
-          </g>
-          <g stroke="#c86c4b" stroke-width=".7" opacity=".6">
-            <path d="M90 199 C76 180 66 177 52 177"/>
-            <path d="M91 199 C106 182 121 180 133 180"/>
           </g>
         </svg>
       </div>
@@ -488,8 +573,8 @@ footer{
     </article>
 
     <article class="character reveal">
-      <div class="symbol sword" aria-label="ხმალი — დორხანის სიმბოლო">
-        <svg viewBox="0 0 180 220" fill="none" role="img" aria-label="ხმლის ხაზოვანი ილუსტრაცია">
+      <div class="symbol sword">
+        <svg viewBox="0 0 180 220" fill="none" role="img" aria-label="ხმალი">
           <defs>
             <linearGradient id="blade" x1="0" y1="0" x2="1" y2="1">
               <stop offset="0" stop-color="#f0d7b5"/>
@@ -522,8 +607,8 @@ footer{
     </article>
 
     <article class="character reveal">
-      <div class="symbol snake" aria-label="გველი — აიდას სიმბოლო">
-        <svg viewBox="0 0 180 220" fill="none" role="img" aria-label="გველის ხაზოვანი ილუსტრაცია">
+      <div class="symbol snake">
+        <svg viewBox="0 0 180 220" fill="none" role="img" aria-label="გველი">
           <g stroke="#c66b4e" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
             <path d="M107 195 C65 183 61 157 91 143 C125 128 125 106 91 100 C55 93 57 68 87 55 C108 45 120 32 106 21"/>
             <path d="M105 195 C132 182 138 162 117 148" opacity=".7"/>
@@ -552,56 +637,13 @@ footer{
   </div>
 </section>
 
-<section class="quotes">
-  <div class="quotes-inner">
-    <div class="quotes-heading reveal">
-      <div class="section-kicker">ტექსტიდან</div>
-      <h2 class="section-title">სიტყვები, რომლებიც რჩებიან.</h2>
-    </div>
-    <div class="quote-flow">
-      <blockquote class="quote reveal">
-        <span class="quote-mark">“</span>
-        იყო არაფერი.
-      </blockquote>
-      <blockquote class="quote reveal">
-        <span class="quote-mark">“</span>
-        რასაც კლავთ, ბოლოს იმას ემსგავსებით.
-      </blockquote>
-      <blockquote class="quote reveal">
-        <span class="quote-mark">“</span>
-        ცოდნა და სიმშვიდე შენი ნიჭია, თუნდაც სიკვდილი ახლოს იდგეს.
-      </blockquote>
-      <blockquote class="quote reveal">
-        <span class="quote-mark">“</span>
-        სიკვდილი თავისას მაინც წაიღებს.
-      </blockquote>
-      <blockquote class="quote reveal">
-        <span class="quote-mark">“</span>
-        თქვა თვალმა: იყოს ნათელი! და იქმნა ნათელი.
-      </blockquote>
-      <blockquote class="quote reveal">
-        <span class="quote-mark">“</span>
-        ჯერ არც სიტყვა იყო და არც ხმა — უფრო შეგრძნება. გაბრიელამდე მხოლოდ მისი ნარჩენი აღწევდა.
-      </blockquote>
-      <blockquote class="quote reveal">
-        <span class="quote-mark">“</span>
-        თითქოს ცხენზე კი არა, საკუთარ სხეულში იჯდა, თუმცა არც იქ იცოდა, როგორ აღმოჩნდა.
-      </blockquote>
-      <blockquote class="quote reveal">
-        <span class="quote-mark">“</span>
-        — ლილი, გაიღვიძე!
-      </blockquote>
-    </div>
-  </div>
-</section>
-
 <section class="chapters-section" id="chapters">
   <div class="chapters-wrap">
     <div class="chapters-top reveal">
       <div class="intro">
         <div class="section-kicker">წიგნის სტრუქტურა</div>
         <h2 class="section-title">წიგნის თავები</h2>
-        <p>აირჩიე თავი, რომ გახსნა მისი გვერდი. ამჟამად აქ წარმოდგენილია თავების სია; სრული ტექსტები მოგვიანებით უნდა დაემატოს.</p>
+        <p>აირჩიე თავი, რომ გახსნა მისი ჩანართი. სრული ტექსტები მოგვიანებით დაემატება.</p>
       </div>
       <a class="purchase" href="#purchase"><span>↗</span> შეძენა</a>
     </div>
@@ -609,7 +651,7 @@ footer{
     <div class="chapter-groups" id="chapter-groups"></div>
 
     <div class="purchase-note" id="purchase">
-      წიგნის შეძენის ბმული აქ დაემატება, როგორც კი აირჩევ პლატფორმას ან გაყიდვის გვერდს.
+      წიგნის შეძენის ბმული აქ დაემატება, როგორც კი აირჩევ გაყიდვის პლატფორმას.
     </div>
   </div>
 </section>
@@ -620,12 +662,16 @@ footer{
       <div class="feedback-copy reveal">
         <div class="section-kicker">მკითხველის ხმა</div>
         <h2 class="section-title">რა დაგრჩა წაკითხვის შემდეგ?</h2>
-        <p>რომელიმე პერსონაჟმა შეგაცვლევინა აზრი? კითხვამ უპასუხოდ დაგტოვა? ან უბრალოდ გინდა, შენი შთაბეჭდილება გაუზიარო ავტორს — შეგიძლია აქ დაწერო.</p>
+        <p>
+          რომელიმე პერსონაჟმა შეგაცვლევინა აზრი? კითხვამ უპასუხოდ დაგტოვა?
+          ან უბრალოდ გინდა, შენი შთაბეჭდილება გაუზიარო ავტორს — შეგიძლია აქ დაწერო.
+        </p>
       </div>
       <form class="feedback-form reveal" action="https://formsubmit.co/YOUR_EMAIL@example.com" method="POST">
         <input type="hidden" name="_subject" value="მკითხველის უკუკავშირი — არსად">
         <input type="hidden" name="_captcha" value="true">
         <input type="hidden" name="_template" value="table">
+
         <div class="field">
           <label for="reader-name">სახელი (არასავალდებულო)</label>
           <input id="reader-name" type="text" name="სახელი" placeholder="როგორ მოგმართოთ?">
@@ -639,7 +685,7 @@ footer{
           <textarea id="reader-message" name="უკუკავშირი" required placeholder="დაწერე, რაც დაგრჩა ამ სამყაროდან..."></textarea>
         </div>
         <button class="send" type="submit">გაგზავნა ↗</button>
-        <div class="form-note">ფორმის გასააქტიურებლად კოდში YOUR_EMAIL@example.com უნდა შეიცვალოს შენი ელფოსტით.</div>
+        <div class="form-note">ფორმის გასააქტიურებლად YOUR_EMAIL@example.com შეცვალე შენი ელფოსტით.</div>
       </form>
     </div>
   </div>
@@ -655,57 +701,84 @@ footer{
 <script>
 const chapterGroups = [
 {
- title:"I — შექმნა და დაცემა",
- chapters:[
- ["პროლოგი",""],
- ["I","სამი ნაყოფი"],["II","დაბადება და სიკვდილი"],
- ["III","გზა ჩემი და გზა უფლისა"],["IV","ცოდვის საწყისი, ვნება"],
- ["V","საფასური"],["VI","გარდაუვალის ხმა"],
- ["VII","ქაოსი ქმნის"],["VIII","ეჭვი"],["IX","დაცემული წესრიგი"],
- ["X","სულის მასა"],["XI","ქარი წაიღებს"],["XII","სამარე"],
- ["XIII","ჩრდილთა სამება"],["XIV","ნადირობა"],["XV","აღდგომა"],
- ["XVI","თოვს"],["XVII","არსობა"],["XVIII","ტყემ იცის"],
- ["XIX","სისხლის კანონი"],["XX","უკანასკნელი სუნთქვა"]
- ]
+  title:"I — შექმნა და დაცემა",
+  chapters:[
+    ["პროლოგი",""],
+    ["I","სამი ნაყოფი"],
+    ["II","დაბადება და სიკვდილი"],
+    ["III","გზა ჩემი და გზა უფლისა"],
+    ["IV","ცოდვის საწყისი, ვნება"],
+    ["V","საფასური"],
+    ["VI","გარდაუვალის ხმა"],
+    ["VII","ქაოსი ქმნის"],
+    ["VIII","ეჭვი"],
+    ["IX","დაცემული წესრიგი"],
+    ["X","სულის მასა"],
+    ["XI","ქარი წაიღებს"],
+    ["XII","სამარე"],
+    ["XIII","ჩრდილთა სამება"],
+    ["XIV","ნადირობა"],
+    ["XV","აღდგომა"],
+    ["XVI","თოვს"],
+    ["XVII","არსობა"],
+    ["XVIII","ტყემ იცის"],
+    ["XIX","სისხლის კანონი"],
+    ["XX","უკანასკნელი სუნთქვა"]
+  ]
 },
 {
- title:"II — რწმენა და გარდაქმნა",
- chapters:[
- ["XXI","რიტუალი"],["XXII","მარილი და რკინა"],
- ["XXIII","წინასწარმეტყველება"],["XXIV","გარდაქმნა"],
- ["XXV","რაც დაწერილია"],["XXVI","რწმენა სხეულის გარეშე"],
- ["XXVII","ფერფლი"],["XXVIII","მეთვალყურეთა წიგნი"],
- ["XXIX","ვერცხლი"],["XXX","შვიდი ჟამის გალობა"],
- ["XXXI","ჟამის 1/7"],["XXXII","ჟამის 2/7"],
- ["XXXIII","ჟამის 3/7"],["XXXIV","ჟამის 4/7"],
- ["XXXV","ჟამის 5/7"],["XXXVI","ჟამის 6/7"],
- ["XXXVII","სრული ჟამი"]
- ]
+  title:"II — რწმენა და გარდაქმნა",
+  chapters:[
+    ["XXI","რიტუალი"],
+    ["XXII","მარილი და რკინა"],
+    ["XXIII","წინასწარმეტყველება"],
+    ["XXIV","გარდაქმნა"],
+    ["XXV","რაც დაწერილია"],
+    ["XXVI","რწმენა სხეულის გარეშე"],
+    ["XXVII","ფერფლი"],
+    ["XXVIII","მეთვალყურეთა წიგნი"],
+    ["XXIX","ვერცხლი"],
+    ["XXX","შვიდი ჟამის გალობა"],
+    ["XXXI","ჟამის 1/7"],
+    ["XXXII","ჟამის 2/7"],
+    ["XXXIII","ჟამის 3/7"],
+    ["XXXIV","ჟამის 4/7"],
+    ["XXXV","ჟამის 5/7"],
+    ["XXXVI","ჟამის 6/7"],
+    ["XXXVII","სრული ჟამი"]
+  ]
 },
 {
- title:"III — დაბრუნება და საიდუმლო",
- chapters:[
- ["XXXVIII","რაც მკვდარია..."],["XXXIX","თვალიდან"],
- ["XL","ნეკნამდე"],["XLI","იეფთეს ქალიშვილი"],
- ["XLII","ევას ხაზი"],["XLIII","წმინდა გრაალი"],
- ["XLIV","მოკვეთილი"],["XLV","ადამის ხაზი"],
- ["XLVI","ძე"],["XLVII","კურეტების ცეკვა"]
- ]
+  title:"III — დაბრუნება და საიდუმლო",
+  chapters:[
+    ["XXXVIII","რაც მკვდარია..."],
+    ["XXXIX","თვალიდან"],
+    ["XL","ნეკნამდე"],
+    ["XLI","იეფთეს ქალიშვილი"],
+    ["XLII","ევას ხაზი"],
+    ["XLIII","წმინდა გრაალი"],
+    ["XLIV","მოკვეთილი"],
+    ["XLV","ადამის ხაზი"],
+    ["XLVI","ძე"],
+    ["XLVII","კურეტების ცეკვა"]
+  ]
 }
 ];
 
 const groupsContainer = document.getElementById("chapter-groups");
-chapterGroups.forEach((group, groupIndex) => {
+
+chapterGroups.forEach(group => {
   const section = document.createElement("div");
   section.className = "chapter-group reveal";
+
   const heading = document.createElement("h3");
   heading.textContent = group.title;
   section.appendChild(heading);
+
   const list = document.createElement("ol");
   list.className = "chapter-list";
 
-  group.chapters.forEach((chapter, chapterIndex) => {
-    const [number, name] = chapter;
+  group.chapters.forEach(([number, name]) => {
     const li = document.createElement("li");
     const button = document.createElement("button");
     button.className = "chapter-button";
@@ -729,6 +802,7 @@ chapterGroups.forEach((group, groupIndex) => {
 
     const content = document.createElement("div");
     content.className = "chapter-content";
+
     const note = document.createElement("div");
     note.className = "read-note";
     note.textContent = "ამ თავის ტექსტი ჯერ არ არის დამატებული.";
@@ -748,7 +822,7 @@ chapterGroups.forEach((group, groupIndex) => {
   groupsContainer.appendChild(section);
 });
 
-/* ცოცხალი ნაპერწკლები */
+/* ცეცხლის ნაპერწკლები */
 const canvas = document.getElementById("embers");
 const ctx = canvas.getContext("2d");
 let w = 0, h = 0, particles = [];
@@ -764,10 +838,11 @@ function resizeCanvas(){
   canvas.style.height = h + "px";
   ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 }
+
 function makeEmber(initial = false){
   return {
     x:Math.random()*w,
-    y:initial ? Math.random()*h : h + Math.random()*50,
+    y:initial ? Math.random()*h : h+Math.random()*50,
     size:Math.random()*1.8+.3,
     vx:(Math.random()-.5)*.55,
     vy:-(Math.random()*.9+.25),
@@ -777,11 +852,13 @@ function makeEmber(initial = false){
     glow:Math.random()*.7+.3
   };
 }
+
 function initEmbers(){
-  particles = [];
-  const count = Math.min(180, Math.floor(w/7));
-  for(let i=0;i<count;i++) particles.push(makeEmber(true));
+  particles=[];
+  const count=Math.min(180,Math.floor(w/7));
+  for(let i=0;i<count;i++)particles.push(makeEmber(true));
 }
+
 function drawEmbers(){
   ctx.clearRect(0,0,w,h);
   for(let i=0;i<particles.length;i++){
@@ -790,8 +867,10 @@ function drawEmbers(){
     p.sway+=.018;
     p.x+=p.vx+Math.sin(p.sway)*.35;
     p.y+=p.vy;
-    const lifeFade=Math.min(1,p.age/18, (p.life-p.age)/30);
+
+    const lifeFade=Math.min(1,p.age/18,(p.life-p.age)/30);
     const alpha=Math.max(0,lifeFade)*p.glow;
+
     if(alpha>0){
       ctx.beginPath();
       ctx.fillStyle=`rgba(255,${Math.floor(90+p.glow*90)},${Math.floor(35+p.glow*50)},${alpha})`;
@@ -800,22 +879,26 @@ function drawEmbers(){
       ctx.arc(p.x,p.y,p.size,0,Math.PI*2);
       ctx.fill();
     }
-    if(p.y < -20 || p.age>p.life || p.x < -30 || p.x > w+30) particles[i]=makeEmber();
+    if(p.y < -20 || p.age>p.life || p.x < -30 || p.x > w+30){
+      particles[i]=makeEmber();
+    }
   }
   ctx.shadowBlur=0;
-  if(!reducedMotion) requestAnimationFrame(drawEmbers);
+  if(!reducedMotion)requestAnimationFrame(drawEmbers);
 }
+
 resizeCanvas();
 initEmbers();
-if(!reducedMotion) drawEmbers();
+if(!reducedMotion)drawEmbers();
 window.addEventListener("resize",()=>{resizeCanvas();initEmbers()});
 
-/* მაუსის მოძრაობაზე მოკლე ნაპერწკლების კვალი */
-let lastSpark = 0;
-window.addEventListener("pointermove", e => {
+/* მაუსის მოძრაობისას ნაპერწკლების კვალი */
+let lastSpark=0;
+window.addEventListener("pointermove",e=>{
   const now=performance.now();
-  if(now-lastSpark<38 || reducedMotion) return;
+  if(now-lastSpark<38 || reducedMotion)return;
   lastSpark=now;
+
   for(let i=0;i<2;i++){
     particles.push({
       x:e.clientX+(Math.random()-.5)*10,
@@ -823,14 +906,35 @@ window.addEventListener("pointermove", e => {
       size:Math.random()*1.7+.5,
       vx:(Math.random()-.5)*1.6,
       vy:Math.random()*1.1+.25,
-      life:Math.random()*24+15,age:0,sway:0,glow:.9
+      life:Math.random()*24+15,
+      age:0,sway:0,glow:.9
     });
   }
-  if(particles.length>260) particles.splice(0,particles.length-260);
+  if(particles.length>260)particles.splice(0,particles.length-260);
 });
 
-/* ბუნებრივი გამოჩენა სქროლისას */
-const revealObserver = new IntersectionObserver(entries=>{
+/* თოვლის ფანტელები */
+const snowLayer=document.getElementById("snow-layer");
+if(!reducedMotion && snowLayer){
+  const snowCount=window.innerWidth<700?32:65;
+
+  for(let i=0;i<snowCount;i++){
+    const flake=document.createElement("i");
+    flake.className="snowflake";
+    const size=Math.random()*3+1;
+
+    flake.style.width=size+"px";
+    flake.style.height=size+"px";
+    flake.style.left=Math.random()*100+"%";
+    flake.style.animationDuration=(Math.random()*12+10)+"s";
+    flake.style.animationDelay=(-Math.random()*22)+"s";
+
+    snowLayer.appendChild(flake);
+  }
+}
+
+/* სექციების ბუნებრივი გამოჩენა */
+const revealObserver=new IntersectionObserver(entries=>{
   entries.forEach(entry=>{
     if(entry.isIntersecting){
       entry.target.classList.add("visible");
@@ -838,10 +942,11 @@ const revealObserver = new IntersectionObserver(entries=>{
     }
   });
 },{threshold:.12});
+
 document.querySelectorAll(".reveal").forEach(el=>revealObserver.observe(el));
 
-/* უკუკავშირის ვალიდაცია */
-document.querySelector(".feedback-form").addEventListener("submit", e=>{
+/* უკუკავშირის ფორმის შემოწმება */
+document.querySelector(".feedback-form").addEventListener("submit",e=>{
   const action=e.currentTarget.getAttribute("action");
   if(action.includes("YOUR_EMAIL@example.com")){
     e.preventDefault();
