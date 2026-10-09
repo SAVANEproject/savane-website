@@ -2,952 +2,738 @@
 <!DOCTYPE html>
 <html lang="ka">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#0b0a09">
-  <meta name="description" content="არსად — ვასიკო ზუმბაძის მისტიკური, ფილოსოფიური რომანი.">
-  <title>არსად — ვასიკო ზუმბაძე</title>
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Georgian:wght@300;400;500;600&family=Noto+Sans+Georgian:wght@300;400;500&display=swap" rel="stylesheet">
-
-  <style>
-    :root {
-      --night: #0b0a09;
-      --night-soft: #11100e;
-      --paper: #e8dfcc;
-      --muted: #a29a8b;
-      --gold: #b9a17b;
-      --red: #743b35;
-      --line: rgba(232, 223, 204, .15);
-      --serif: "Noto Serif Georgian", Georgia, serif;
-      --sans: "Noto Sans Georgian", sans-serif;
-    }
-
-    * { box-sizing: border-box; }
-
-    html {
-      scroll-behavior: smooth;
-      scroll-padding-top: 90px;
-      background: var(--night);
-    }
-
-    body {
-      margin: 0;
-      color: var(--paper);
-      background: var(--night);
-      font-family: var(--serif);
-      font-weight: 300;
-      overflow-x: hidden;
-      -webkit-font-smoothing: antialiased;
-    }
-
-    body::after {
-      content: "";
-      position: fixed;
-      inset: 0;
-      z-index: 20;
-      pointer-events: none;
-      opacity: .11;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.92' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.22'/%3E%3C/svg%3E");
-      mix-blend-mode: screen;
-    }
-
-    a { color: inherit; text-decoration: none; }
-
-    button {
-      font: inherit;
-    }
-
-    ::selection {
-      color: var(--night);
-      background: var(--gold);
-    }
-
-    .preloader {
-      position: fixed;
-      inset: 0;
-      z-index: 100;
-      display: grid;
-      place-items: center;
-      background: var(--night);
-      animation: leave 1s 1.5s forwards;
-      pointer-events: none;
-    }
-
-    .preloader span {
-      font-size: 13px;
-      letter-spacing: .6em;
-      padding-left: .6em;
-      color: var(--gold);
-      animation: breathe 1.5s ease-in-out infinite;
-    }
-
-    @keyframes leave {
-      to { opacity: 0; visibility: hidden; }
-    }
-
-    @keyframes breathe {
-      50% { opacity: .3; }
-    }
-
-    .topbar {
-      position: absolute;
-      z-index: 10;
-      top: 0;
-      left: 0;
-      width: 100%;
-      padding: 30px 6.5%;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-bottom: 1px solid rgba(232,223,204,.09);
-    }
-
-    .wordmark {
-      font-size: 15px;
-      letter-spacing: .3em;
-      padding-left: .3em;
-      font-weight: 400;
-    }
-
-    .topbar nav {
-      display: flex;
-      gap: 30px;
-      align-items: center;
-    }
-
-    .topbar nav a {
-      font-family: var(--sans);
-      color: var(--muted);
-      font-size: 10px;
-      letter-spacing: .08em;
-      transition: color .3s;
-    }
-
-    .topbar nav a:hover { color: var(--paper); }
-
-    .hero {
-      position: relative;
-      min-height: 100svh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      overflow: hidden;
-      isolation: isolate;
-      padding: 120px 22px 80px;
-      text-align: center;
-      background:
-        radial-gradient(ellipse at 50% 44%, rgba(100, 52, 39, .2), transparent 35%),
-        radial-gradient(ellipse at 50% 100%, rgba(107, 80, 43, .11), transparent 50%),
-        #0b0a09;
-    }
-
-    .hero::before {
-      content: "";
-      position: absolute;
-      z-index: -2;
-      inset: 8% 15% 0;
-      background: url("https://images.unsplash.com/photo-1518709594023-6eab9bab7b23?auto=format&fit=crop&w=1800&q=85") center / cover;
-      opacity: .13;
-      filter: brightness(.45) saturate(.45);
-      mask-image: radial-gradient(ellipse, black 0%, transparent 68%);
-    }
-
-    .hero::after {
-      content: "";
-      position: absolute;
-      z-index: -1;
-      width: min(76vw, 740px);
-      aspect-ratio: 1;
-      border: 1px solid rgba(185,161,123,.11);
-      border-radius: 50%;
-      box-shadow:
-        0 0 0 50px rgba(185,161,123,.018),
-        0 0 0 100px rgba(185,161,123,.012);
-      animation: orbit 40s linear infinite;
-    }
-
-    @keyframes orbit {
-      to { transform: rotate(360deg); }
-    }
-
-    .hero-overline {
-      margin: 0 0 30px;
-      color: var(--gold);
-      font-family: var(--sans);
-      font-size: 9px;
-      letter-spacing: .38em;
-      padding-left: .38em;
-      animation: appear 1.4s .9s both;
-    }
-
-    .hero-title {
-      position: relative;
-      margin: 0;
-      font-size: clamp(80px, 16vw, 190px);
-      font-weight: 300;
-      line-height: 1.2;
-      letter-spacing: .07em;
-      padding-left: .07em;
-      color: #e8dfcc;
-      text-shadow: 0 0 65px rgba(185,161,123,.08);
-      animation: title-in 2s .45s both;
-    }
-
-    @keyframes title-in {
-      from {
-        opacity: 0;
-        transform: translateY(24px);
-        filter: blur(10px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-        filter: blur(0);
-      }
-    }
-
-    @keyframes appear {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-
-    .hero-subtitle {
-      max-width: 450px;
-      margin: 22px auto 0;
-      color: #b4aa98;
-      font-size: clamp(13px, 1.6vw, 16px);
-      line-height: 2.1;
-      letter-spacing: .04em;
-      animation: appear 1.5s 1.2s both;
-    }
-
-    .hero-author {
-      margin-top: 40px;
-      font-family: var(--sans);
-      font-size: 10px;
-      color: var(--muted);
-      letter-spacing: .24em;
-      padding-left: .24em;
-      animation: appear 1.5s 1.5s both;
-    }
-
-    .enter {
-      position: absolute;
-      bottom: 45px;
-      left: 50%;
-      transform: translateX(-50%);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 15px;
-      color: var(--muted);
-      font-family: var(--sans);
-      font-size: 8px;
-      letter-spacing: .28em;
-      white-space: nowrap;
-    }
-
-    .enter-line {
-      width: 1px;
-      height: 42px;
-      background: linear-gradient(var(--gold), transparent);
-      transform-origin: top;
-      animation: descend 2s ease-in-out infinite;
-    }
-
-    @keyframes descend {
-      0%, 100% { transform: scaleY(.5); opacity: .45; }
-      50% { transform: scaleY(1); opacity: 1; }
-    }
-
-    .section {
-      position: relative;
-      padding: 140px 8%;
-    }
-
-    .eyebrow {
-      margin: 0 0 26px;
-      color: var(--gold);
-      font-family: var(--sans);
-      font-size: 9px;
-      letter-spacing: .3em;
-      line-height: 1.9;
-    }
-
-    .section-title {
-      margin: 0;
-      font-size: clamp(30px, 5vw, 58px);
-      font-weight: 300;
-      line-height: 1.65;
-      letter-spacing: -.025em;
-    }
-
-    .muted { color: var(--muted); }
-
-    .manifesto {
-      min-height: 690px;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10%;
-      align-items: center;
-      background:
-        radial-gradient(ellipse at 10% 55%, rgba(102, 49, 40, .11), transparent 35%),
-        var(--night-soft);
-    }
-
-    .manifesto-copy { max-width: 580px; }
-
-    .manifesto-copy .section-title {
-      max-width: 560px;
-      margin-bottom: 30px;
-    }
-
-    .manifesto-copy p:not(.eyebrow) {
-      max-width: 470px;
-      color: var(--muted);
-      font-size: 14px;
-      line-height: 2.3;
-    }
-
-    .seal {
-      position: relative;
-      width: min(100%, 420px);
-      aspect-ratio: 3 / 4;
-      justify-self: center;
-      display: grid;
-      place-items: center;
-      border: 1px solid rgba(185,161,123,.19);
-      background:
-        radial-gradient(ellipse at 50% 45%, rgba(106,67,47,.16), transparent 54%),
-        linear-gradient(145deg, #17130f, #0b0a09 65%);
-      overflow: hidden;
-    }
-
-    .seal::before,
-    .seal::after {
-      content: "";
-      position: absolute;
-      width: 65%;
-      height: 85%;
-      border: 1px solid rgba(185,161,123,.12);
-      border-radius: 50%;
-      transform: rotate(24deg);
-    }
-
-    .seal::after {
-      transform: rotate(-24deg);
-    }
-
-    .seal-inner {
-      position: relative;
-      z-index: 1;
-      text-align: center;
-    }
-
-    .seal-glyph {
-      color: var(--gold);
-      font-size: 110px;
-      line-height: 1.2;
-      font-weight: 300;
-      opacity: .82;
-    }
-
-    .seal-caption {
-      margin-top: 24px;
-      color: var(--muted);
-      font-family: var(--sans);
-      font-size: 8px;
-      letter-spacing: .32em;
-    }
-
-    .quote-section {
-      text-align: center;
-      padding-top: 170px;
-      padding-bottom: 170px;
-      overflow: hidden;
-      background:
-        radial-gradient(ellipse at center, rgba(112,69,45,.15), transparent 52%),
-        #0b0a09;
-    }
-
-    .quote-mark {
-      color: var(--red);
-      font-size: 70px;
-      line-height: 1;
-      font-weight: 300;
-    }
-
-    .quote-text {
-      max-width: 900px;
-      margin: 24px auto 0;
-      font-size: clamp(25px, 4.2vw, 48px);
-      line-height: 1.9;
-      font-weight: 300;
-      letter-spacing: -.015em;
-    }
-
-    .quote-attribution {
-      margin-top: 35px;
-      font-family: var(--sans);
-      font-size: 9px;
-      letter-spacing: .26em;
-      color: var(--muted);
-    }
-
-    .world {
-      background: var(--night-soft);
-    }
-
-    .world-heading {
-      max-width: 680px;
-      margin-bottom: 65px;
-    }
-
-    .world-heading .section-title { margin-bottom: 22px; }
-
-    .world-heading > p:last-child {
-      max-width: 510px;
-      color: var(--muted);
-      font-size: 14px;
-      line-height: 2.2;
-    }
-
-    .motifs {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      border-top: 1px solid var(--line);
-    }
-
-    .motif {
-      padding: 38px 26px 10px 0;
-      margin-right: 26px;
-      border-right: 1px solid var(--line);
-    }
-
-    .motif:last-child {
-      border-right: 0;
-      margin-right: 0;
-    }
-
-    .motif-number {
-      color: var(--gold);
-      font-family: var(--sans);
-      font-size: 10px;
-      letter-spacing: .2em;
-    }
-
-    .motif h3 {
-      margin: 27px 0 15px;
-      font-size: 22px;
-      font-weight: 400;
-      letter-spacing: .01em;
-    }
-
-    .motif p {
-      max-width: 310px;
-      color: var(--muted);
-      font-size: 12px;
-      line-height: 2.1;
-    }
-
-    .interlude {
-      min-height: 620px;
-      position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      overflow: hidden;
-      background:
-        linear-gradient(0deg, rgba(11,10,9,.94), rgba(11,10,9,.46) 45%, rgba(11,10,9,.9)),
-        url("https://images.unsplash.com/photo-1518709594023-6eab9bab7b23?auto=format&fit=crop&w=2000&q=90") center / cover;
-    }
-
-    .interlude-content {
-      max-width: 700px;
-      padding: 80px 24px;
-    }
-
-    .interlude h2 {
-      margin: 0;
-      font-size: clamp(34px, 6vw, 65px);
-      line-height: 1.55;
-      font-weight: 300;
-      letter-spacing: -.025em;
-    }
-
-    .interlude p {
-      margin-top: 25px;
-      color: #c1b6a4;
-      font-size: 13px;
-      line-height: 2.2;
-    }
-
-    .excerpt {
-      background: #e7decb;
-      color: #211c16;
-      padding-top: 130px;
-      padding-bottom: 140px;
-    }
-
-    .excerpt .eyebrow { color: #785b3e; }
-
-    .excerpt-grid {
-      display: grid;
-      grid-template-columns: .75fr 1.25fr;
-      gap: 12%;
-      align-items: start;
-    }
-
-    .excerpt-heading {
-      position: sticky;
-      top: 50px;
-    }
-
-    .excerpt-heading .section-title {
-      font-size: clamp(35px, 5vw, 58px);
-    }
-
-    .excerpt-heading p:last-child {
-      margin-top: 25px;
-      max-width: 310px;
-      font-size: 12px;
-      line-height: 2.2;
-      color: #766c5e;
-    }
-
-    .excerpt-text {
-      font-size: clamp(16px, 1.7vw, 19px);
-      line-height: 2.5;
-      font-weight: 300;
-    }
-
-    .excerpt-text p { margin: 0 0 27px; }
-
-    .excerpt-text .opening {
-      font-size: clamp(24px, 3vw, 35px);
-      line-height: 1.8;
-      margin-bottom: 35px;
-    }
-
-    .excerpt-note {
-      padding-top: 24px;
-      border-top: 1px solid rgba(33,28,22,.2);
-      font-family: var(--sans);
-      font-size: 9px;
-      color: #766c5e;
-      letter-spacing: .1em;
-    }
-
-    .author {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10%;
-      align-items: center;
-      background: #0e0c0a;
-    }
-
-    .author-art {
-      min-height: 420px;
-      position: relative;
-      display: grid;
-      place-items: center;
-      overflow: hidden;
-      background:
-        radial-gradient(ellipse at 50% 40%, rgba(104,57,41,.24), transparent 50%),
-        #11100e;
-      border: 1px solid var(--line);
-    }
-
-    .author-art::before {
-      content: "";
-      width: 62%;
-      height: 82%;
-      position: absolute;
-      border: 1px solid rgba(185,161,123,.2);
-      border-radius: 50% 50% 0 0;
-      transform: scaleX(.72);
-    }
-
-    .author-art span {
-      position: relative;
-      z-index: 1;
-      font-size: clamp(45px, 7vw, 85px);
-      letter-spacing: .08em;
-      padding-left: .08em;
-      color: var(--gold);
-      font-weight: 300;
-    }
-
-    .author-copy .section-title { font-size: clamp(33px, 4.5vw, 53px); }
-
-    .author-copy > p:not(.eyebrow) {
-      max-width: 460px;
-      color: var(--muted);
-      font-size: 13px;
-      line-height: 2.3;
-    }
-
-    .closing {
-      min-height: 75vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 110px 24px;
-      background:
-        radial-gradient(ellipse at center, rgba(105,62,45,.17), transparent 48%),
-        var(--night);
-    }
-
-    .closing h2 {
-      margin: 0;
-      font-size: clamp(60px, 12vw, 130px);
-      line-height: 1.35;
-      font-weight: 300;
-      letter-spacing: .07em;
-      padding-left: .07em;
-    }
-
-    .closing p {
-      max-width: 460px;
-      margin: 25px auto 0;
-      color: var(--muted);
-      font-size: 13px;
-      line-height: 2.2;
-    }
-
-    .closing .author-name {
-      margin-top: 38px;
-      color: var(--gold);
-      font-family: var(--sans);
-      font-size: 10px;
-      letter-spacing: .25em;
-    }
-
-    footer {
-      padding: 30px 7%;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 20px;
-      border-top: 1px solid var(--line);
-      color: var(--muted);
-      font-family: var(--sans);
-      font-size: 9px;
-      letter-spacing: .08em;
-    }
-
-    .footer-mark {
-      color: var(--paper);
-      font-family: var(--serif);
-      font-size: 13px;
-      letter-spacing: .2em;
-    }
-
-    .reveal {
-      opacity: 0;
-      transform: translateY(22px);
-      transition: opacity 1s ease, transform 1s ease;
-    }
-
-    .reveal.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    @media (max-width: 760px) {
-      .topbar {
-        padding: 24px 22px;
-      }
-
-      .topbar nav { gap: 15px; }
-      .topbar nav a { font-size: 9px; }
-      .topbar nav a:first-child { display: none; }
-
-      .hero { min-height: 92svh; }
-
-      .hero-title {
-        font-size: clamp(67px, 17vw, 120px);
-      }
-
-      .hero::after { width: 95vw; }
-
-      .section { padding: 90px 25px; }
-
-      .manifesto,
-      .author,
-      .excerpt-grid {
-        grid-template-columns: 1fr;
-        gap: 45px;
-      }
-
-      .manifesto { gap: 48px; }
-
-      .seal {
-        width: min(100%, 330px);
-        justify-self: center;
-      }
-
-      .quote-section {
-        padding: 115px 25px;
-      }
-
-      .motifs { grid-template-columns: 1fr; }
-
-      .motif {
-        border-right: 0;
-        border-bottom: 1px solid var(--line);
-        padding: 30px 0;
-        margin: 0;
-      }
-
-      .motif:last-child { border-bottom: 0; }
-
-      .interlude { min-height: 500px; }
-
-      .excerpt-heading { position: static; }
-
-      .author-art { min-height: 330px; }
-
-      footer {
-        flex-direction: column;
-        text-align: center;
-        gap: 13px;
-      }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after {
-        animation-duration: .01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: .01ms !important;
-        scroll-behavior: auto !important;
-      }
-
-      .reveal {
-        opacity: 1;
-        transform: none;
-      }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#050505">
+
+<title>არსად — ვასიკო ზუმბაძე</title>
+<meta name="description" content="არსად — ვასიკო ზუმბაძის მისტიკური რომანი. წრე. ციკლი. დაბადება. სიკვდილი.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Georgian:wght@300;400;500;600&family=Noto+Sans+Georgian:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --black: #050505;
+  --white: #f4f1ef;
+  --muted: #99918f;
+  --red: #a51e22;
+  --fire: #ff652e;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  background: var(--black);
+}
+
+body {
+  background: var(--black);
+  color: var(--white);
+  font-family: "Noto Serif Georgian", serif;
+  font-weight: 300;
+  overflow-x: hidden;
+}
+
+::selection {
+  background: var(--red);
+  color: white;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+#embers {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 5;
+  opacity: .72;
+}
+
+.flame-glow {
+  position: fixed;
+  z-index: 0;
+  inset: auto -20% -35%;
+  height: 65vh;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse at 50% 100%,
+      rgba(177, 22, 15, .23),
+      rgba(108, 20, 12, .10) 30%,
+      transparent 68%);
+  animation: firelight 4s ease-in-out infinite alternate;
+}
+
+@keyframes firelight {
+  from { opacity: .55; transform: scaleX(.96); }
+  to { opacity: 1; transform: scaleX(1.04); }
+}
+
+nav {
+  position: absolute;
+  z-index: 10;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 30px 7%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: "Noto Sans Georgian", sans-serif;
+  font-size: 11px;
+  letter-spacing: 2px;
+  color: #c6c0be;
+}
+
+.nav-mark {
+  color: var(--white);
+  font-size: 15px;
+  letter-spacing: 4px;
+}
+
+.nav-link {
+  transition: color .3s;
+}
+
+.nav-link:hover {
+  color: var(--fire);
+}
+
+.hero {
+  position: relative;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  overflow: hidden;
+  padding: 110px 20px 80px;
+  isolation: isolate;
+}
+
+.hero::before {
+  content: "";
+  position: absolute;
+  z-index: -2;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at center,
+      rgba(60, 13, 12, .18) 0%,
+      transparent 53%),
+    linear-gradient(180deg, #050505 0%, #080606 68%, #100504 100%);
+}
+
+.hero::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  bottom: -180px;
+  left: -15%;
+  width: 130%;
+  height: 350px;
+  background: linear-gradient(
+    0deg,
+    rgba(255, 61, 17, .23),
+    rgba(185, 22, 13, .08) 38%,
+    transparent 75%
+  );
+  filter: blur(38px);
+  animation: flames 2.7s ease-in-out infinite alternate;
+}
+
+@keyframes flames {
+  from { transform: translateY(12px) scaleX(.96); opacity: .6; }
+  to { transform: translateY(-8px) scaleX(1.03); opacity: 1; }
+}
+
+.eyebrow {
+  font-family: "Noto Sans Georgian", sans-serif;
+  color: #b9a9a5;
+  font-size: 10px;
+  letter-spacing: 5px;
+  text-transform: uppercase;
+  margin-bottom: 34px;
+  opacity: 0;
+  animation: rise 1.3s .2s forwards;
+}
+
+.title-wrap {
+  position: relative;
+  display: inline-grid;
+  place-items: center;
+}
+
+.title-wrap h1 {
+  font-size: clamp(76px, 15vw, 180px);
+  line-height: 1.25;
+  letter-spacing: .055em;
+  font-weight: 300;
+  color: #fff;
+  text-shadow: 0 0 45px rgba(255,255,255,.06);
+  animation: titleIn 1.8s .3s both;
+}
+
+.title-wrap::after {
+  content: "";
+  position: absolute;
+  inset: 4% -7%;
+  border: 1px solid rgba(207, 63, 43, .28);
+  border-radius: 50%;
+  transform: rotate(-22deg) scaleY(.72);
+  animation: ring 24s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes ring {
+  from { transform: rotate(-22deg) scaleY(.72); }
+  to { transform: rotate(338deg) scaleY(.72); }
+}
+
+.author {
+  margin-top: 27px;
+  font-size: 13px;
+  color: #d0c9c6;
+  letter-spacing: 2px;
+  opacity: 0;
+  animation: rise 1.3s 1s forwards;
+}
+
+.hero-line {
+  width: 1px;
+  height: 66px;
+  margin: 43px auto 20px;
+  background: linear-gradient(transparent, #a83229, transparent);
+  opacity: 0;
+  animation: rise 1.4s 1.2s forwards;
+}
+
+.hero-caption {
+  font-family: "Noto Sans Georgian", sans-serif;
+  color: #a59b98;
+  font-size: 10px;
+  letter-spacing: 3px;
+  opacity: 0;
+  animation: rise 1.4s 1.4s forwards;
+}
+
+.scroll-note {
+  position: absolute;
+  bottom: 28px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: "Noto Sans Georgian", sans-serif;
+  font-size: 9px;
+  letter-spacing: 3px;
+  color: #8f8582;
+}
+
+@keyframes rise {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes titleIn {
+  from { opacity: 0; transform: translateY(24px); filter: blur(8px); }
+  to { opacity: 1; transform: translateY(0); filter: blur(0); }
+}
+
+section:not(.hero) {
+  position: relative;
+  z-index: 2;
+}
+
+.intro {
+  padding: 155px 24px 170px;
+  text-align: center;
+}
+
+.section-label {
+  font-family: "Noto Sans Georgian", sans-serif;
+  color: #b13b32;
+  font-size: 10px;
+  letter-spacing: 4px;
+  margin-bottom: 40px;
+}
+
+.intro h2 {
+  max-width: 800px;
+  margin: 0 auto;
+  font-size: clamp(25px, 4vw, 43px);
+  line-height: 2;
+  font-weight: 300;
+}
+
+.intro h2 span {
+  color: #9c2427;
+}
+
+.intro .small-copy {
+  max-width: 510px;
+  margin: 35px auto 0;
+  color: var(--muted);
+  font-family: "Noto Sans Georgian", sans-serif;
+  font-size: 13px;
+  line-height: 2.3;
+}
+
+.quote-section {
+  position: relative;
+  padding: 120px 25px;
+  text-align: center;
+  border-top: 1px solid rgba(255,255,255,.07);
+  border-bottom: 1px solid rgba(255,255,255,.07);
+  background:
+    radial-gradient(ellipse at center,
+      rgba(117, 13, 17, .12),
+      transparent 65%);
+}
+
+.quote-symbol {
+  font-size: 42px;
+  color: #8d2225;
+  margin-bottom: 25px;
+  font-weight: 300;
+}
+
+.quote-section blockquote {
+  max-width: 850px;
+  margin: 0 auto;
+  font-size: clamp(23px, 3.8vw, 39px);
+  font-weight: 300;
+  line-height: 2;
+}
+
+.quote-note {
+  margin-top: 30px;
+  font-family: "Noto Sans Georgian", sans-serif;
+  color: #817775;
+  font-size: 10px;
+  letter-spacing: 2px;
+}
+
+.cycle {
+  padding: 160px 22px;
+  text-align: center;
+}
+
+.cycle-ring {
+  width: 180px;
+  height: 180px;
+  margin: 0 auto 50px;
+  position: relative;
+  border: 1px solid rgba(174, 42, 34, .45);
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  animation: ring 35s linear infinite;
+  box-shadow: 0 0 65px rgba(144, 18, 15, .08),
+              inset 0 0 35px rgba(144, 18, 15, .06);
+}
+
+.cycle-ring::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  background: #ff6137;
+  border-radius: 50%;
+  position: absolute;
+  top: 12px;
+  box-shadow: 0 0 18px #ff3b1d;
+}
+
+.cycle-ring span {
+  font-family: "Noto Sans Georgian", sans-serif;
+  font-size: 11px;
+  letter-spacing: 3px;
+  animation: counter 35s linear infinite;
+}
+
+@keyframes counter {
+  from { transform: rotate(0); }
+  to { transform: rotate(-360deg); }
+}
+
+.cycle h2 {
+  font-size: clamp(26px, 4vw, 42px);
+  line-height: 1.8;
+  font-weight: 300;
+}
+
+.cycle p {
+  margin-top: 22px;
+  font-family: "Noto Sans Georgian", sans-serif;
+  color: #928885;
+  font-size: 12px;
+  line-height: 2.2;
+}
+
+.motifs {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border-top: 1px solid rgba(255,255,255,.07);
+  border-bottom: 1px solid rgba(255,255,255,.07);
+}
+
+.motif {
+  min-height: 245px;
+  padding: 50px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  border-right: 1px solid rgba(255,255,255,.07);
+}
+
+.motif:last-child {
+  border-right: 0;
+}
+
+.motif-symbol {
+  font-size: 29px;
+  color: #a72b2b;
+  margin-bottom: 25px;
+}
+
+.motif h3 {
+  font-size: 17px;
+  font-weight: 400;
+  margin-bottom: 13px;
+}
+
+.motif p {
+  color: #8f8582;
+  font-family: "Noto Sans Georgian", sans-serif;
+  font-size: 11px;
+  line-height: 2;
+}
+
+.author-section {
+  padding: 145px 24px 160px;
+  text-align: center;
+}
+
+.author-section h2 {
+  font-size: clamp(27px, 4vw, 42px);
+  font-weight: 300;
+  margin-bottom: 27px;
+}
+
+.author-section p {
+  max-width: 520px;
+  margin: 0 auto;
+  color: #a39a97;
+  font-family: "Noto Sans Georgian", sans-serif;
+  font-size: 12px;
+  line-height: 2.3;
+}
+
+.closing {
+  position: relative;
+  padding: 140px 20px 120px;
+  text-align: center;
+  overflow: hidden;
+  background: radial-gradient(ellipse at center bottom,
+    rgba(135, 20, 15, .2),
+    transparent 65%);
+}
+
+.closing h2 {
+  font-size: clamp(35px, 7vw, 76px);
+  line-height: 1.7;
+  font-weight: 300;
+}
+
+.closing p {
+  margin-top: 25px;
+  color: #a69a97;
+  font-family: "Noto Sans Georgian", sans-serif;
+  font-size: 11px;
+  letter-spacing: 2px;
+}
+
+footer {
+  position: relative;
+  z-index: 6;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 28px 7%;
+  border-top: 1px solid rgba(255,255,255,.08);
+  color: #807774;
+  font-family: "Noto Sans Georgian", sans-serif;
+  font-size: 10px;
+  letter-spacing: 1px;
+}
+
+footer .footer-title {
+  color: #ddd5d2;
+  letter-spacing: 3px;
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(25px);
+  transition: opacity 1s ease, transform 1s ease;
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (max-width: 650px) {
+  nav { padding: 23px 6%; }
+  .nav-link { letter-spacing: 1px; font-size: 9px; }
+  .eyebrow { letter-spacing: 3px; }
+  .hero-caption { letter-spacing: 2px; }
+  .intro { padding: 110px 22px 120px; }
+  .quote-section { padding: 90px 22px; }
+  .cycle { padding: 110px 22px; }
+  .cycle-ring { width: 145px; height: 145px; }
+  .motifs { grid-template-columns: 1fr; }
+  .motif {
+    min-height: 180px;
+    border-right: 0;
+    border-bottom: 1px solid rgba(255,255,255,.07);
+  }
+  .motif:last-child { border-bottom: 0; }
+  .author-section { padding: 110px 24px; }
+  footer {
+    flex-direction: column;
+    gap: 15px;
+    text-align: center;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: .01ms !important;
+  }
+}
+</style>
 </head>
 
 <body>
-  <div class="preloader"><span>არსად</span></div>
 
-  <header class="topbar">
-    <a href="#home" class="wordmark">არსად</a>
-    <nav aria-label="მთავარი ნავიგაცია">
-      <a href="#world">სამყარო</a>
-      <a href="#excerpt">ნაწყვეტი</a>
-      <a href="#author">ავტორი</a>
-    </nav>
-  </header>
+<canvas id="embers" aria-hidden="true"></canvas>
+<div class="flame-glow" aria-hidden="true"></div>
 
-  <main>
-    <section class="hero" id="home">
-      <p class="hero-overline">მისტიკური · ფილოსოფიური რომანი</p>
-      <h1 class="hero-title">არსად</h1>
-      <p class="hero-subtitle">
-        ზოგჯერ გზა, რომელსაც ხსნისკენ მივყავართ,
-        იქ მთავრდება, სადაც საკუთარი თავისგან გაქცევა შეუძლებელია.
+<nav>
+  <a href="#top" class="nav-mark">ვ. ზ.</a>
+  <a href="#book" class="nav-link">რომანის შესახებ ↓</a>
+</nav>
+
+<main>
+  <section class="hero" id="top">
+    <p class="eyebrow">მისტიკური რომანი</p>
+
+    <div class="title-wrap">
+      <h1>არსად</h1>
+    </div>
+
+    <p class="author">ვასიკო ზუმბაძე</p>
+    <div class="hero-line"></div>
+    <p class="hero-caption">წრე · ციკლი · დაბადება · სიკვდილი</p>
+
+    <a class="scroll-note" href="#book">ჩასვლა სიბნელეში ↓</a>
+  </section>
+
+  <section class="intro" id="book">
+    <div class="reveal">
+      <p class="section-label">I — დასაწყისი</p>
+      <h2>
+        ყველა დასასრულს<br>
+        დასაწყისი ახსოვს.<br>
+        <span>ყველა დასაწყისს — დასასრული.</span>
+      </h2>
+      <p class="small-copy">
+        არსებობს წრე, რომლის მიღმაც გასვლა შეუძლებელია.
+        არსებობს გზა, რომელიც უკან გვაბრუნებს.
+        და არსებობს არჩევანი, რომლის ფასსაც მხოლოდ ბოლოს ვიგებთ.
       </p>
-      <p class="hero-author">ვასიკო ზუმბაძე</p>
+    </div>
+  </section>
 
-      <a class="enter" href="#begin">
-        <span>შედი სამყაროში</span>
-        <span class="enter-line"></span>
-      </a>
-    </section>
+  <section class="quote-section">
+    <div class="reveal">
+      <div class="quote-symbol">✳</div>
+      <blockquote>
+        „ჭრილობა სულზე... ერთადერთი ხსნა... მოტევებაა.“
+      </blockquote>
+      <p class="quote-note">მოტევება — თუ უკანასკნელი მსხვერპლი?</p>
+    </div>
+  </section>
 
-    <section class="manifesto section" id="begin">
-      <div class="manifesto-copy reveal">
-        <p class="eyebrow">I — ზღურბლი</p>
-        <h2 class="section-title">
-          ყველა ამბავს აქვს დასაწყისი.
-          ყველა დასაწყისს — თავისი სიბნელე.
-        </h2>
-        <p>
-          მონასტრის სიჩუმეში გაღვიძებული გოგონა.
-          წინასწარმეტყველება, რომელიც ბედისწერას ჰგავს.
-          ადამიანი, რომელსაც სამართლიანობის სჯერა,
-          და ძალა, რომლის სახელის წარმოთქმაც არავის შეუძლია.
-        </p>
-        <p>
-          მაგრამ რა ხდება მაშინ, როდესაც ხსნა და განადგურება
-          ერთი და იმავე გზის ორ ბოლოში აღმოჩნდება?
-        </p>
+  <section class="cycle">
+    <div class="reveal">
+      <div class="cycle-ring">
+        <span>უსასრულობა</span>
       </div>
-
-      <div class="seal reveal" aria-label="არსადის სიმბოლური ილუსტრაცია">
-        <div class="seal-inner">
-          <div class="seal-glyph">✳</div>
-          <div class="seal-caption">შორის · მიღმა · არსად</div>
-        </div>
-      </div>
-    </section>
-
-    <section class="quote-section section">
-      <div class="reveal">
-        <div class="quote-mark">“</div>
-        <p class="quote-text">
-          ჭრილობა სულზე... ერთადერთი ხსნა...
-          მოტევებაა.
-        </p>
-        <p class="quote-attribution">არსად — ვასიკო ზუმბაძე</p>
-      </div>
-    </section>
-
-    <section class="world section" id="world">
-      <div class="world-heading reveal">
-        <p class="eyebrow">II — სამყარო</p>
-        <h2 class="section-title">იქ, სადაც სიმბოლოები ჩუმად ლაპარაკობენ.</h2>
-        <p>
-          „არსად“ არის მოგზაურობა სამყაროში, სადაც
-          რწმენა შეიძლება თავშესაფარიც იყოს და ხაფანგიც,
-          ხოლო ჭეშმარიტება — გაცილებით მძიმე, ვიდრე სიცრუე.
-        </p>
-      </div>
-
-      <div class="motifs">
-        <article class="motif reveal">
-          <span class="motif-number">01 / სარკე</span>
-          <h3>ანარეკლი</h3>
-          <p>
-            ის, რასაც ვუყურებთ, ყოველთვის ჩვენ არ ვართ.
-            ზოგჯერ სარკე მხოლოდ იმას გვიბრუნებს,
-            რის დანახვასაც ყველაზე მეტად ვერიდებით.
-          </p>
-        </article>
-
-        <article class="motif reveal">
-          <span class="motif-number">02 / შროშანი</span>
-          <h3>წინასწარმეტყველება</h3>
-          <p>
-            ნიშანი, რომელიც გზას გვიჩვენებს,
-            მაგრამ არასოდეს გვპირდება,
-            რომ ამ გზის ბოლოს გადარჩენას შევძლებთ.
-          </p>
-        </article>
-
-        <article class="motif reveal">
-          <span class="motif-number">03 / სანთელი</span>
-          <h3>რწმენა</h3>
-          <p>
-            პატარა სინათლე უსასრულო სიბნელეში.
-            მაგრამ რა რჩება მაშინ, როდესაც სინათლე ქრება
-            და პასუხი არსაიდან მოდის?
-          </p>
-        </article>
-      </div>
-    </section>
-
-    <section class="interlude">
-      <div class="interlude-content reveal">
-        <p class="eyebrow">III — გარდასვლა</p>
-        <h2>შეიძლება ბედისწერა მხოლოდ ის იყოს, რისიც გვჯერა?</h2>
-        <p>
-          ყოველი არჩევანი რაღაცას გვართმევს.
-          ყოველი მსხვერპლი კი ყოველთვის იმას არ გვაძლევს,
-          რისთვისაც გავიღეთ.
-        </p>
-      </div>
-    </section>
-
-    <section class="excerpt section" id="excerpt">
-      <div class="excerpt-grid">
-        <div class="excerpt-heading reveal">
-          <p class="eyebrow">IV — პირველი ხმა</p>
-          <h2 class="section-title">ყველაფერი ერთი სიტყვით იწყება.</h2>
-          <p>
-            წიგნიდან · დასაწყისი
-          </p>
-        </div>
-
-        <div class="excerpt-text reveal">
-          <p class="opening">„ლილი, გაიღვიძე“.</p>
-          <p>
-            ხმა სიჩუმეში გაისმა — ისეთი სიჩუმის შუაგულში,
-            რომელსაც თითქოს სამყაროს ყველა სხვა ხმა
-            სამუდამოდ გადაეყლაპა.
-          </p>
-          <p>
-            სადღაც, უხილავ საზღვარს მიღმა,
-            რაღაც უკვე დაწყებულიყო.
-          </p>
-          <p class="excerpt-note">
-            ეს ტექსტი საიტის სადემონსტრაციო ნაწყვეტია.
-            აქ ჩასვი რომანის ნამდვილი დასაწყისი.
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <section class="author section" id="author">
-      <div class="author-art reveal" aria-label="ავტორის სახელის გრაფიკული კომპოზიცია">
-        <span>ვ. ზ.</span>
-      </div>
-
-      <div class="author-copy reveal">
-        <p class="eyebrow">V — შემოქმედი</p>
-        <h2 class="section-title">ვასიკო ზუმბაძე</h2>
-        <p>
-          „არსად“ არის ამბავი რწმენაზე, არჩევანზე,
-          მსხვერპლზე და იმ საზღვარზე, რომლის მიღმაც
-          ადამიანი საკუთარ თავს ვეღარ გაექცევა.
-        </p>
-        <p>
-          ეს არ არის მხოლოდ გზა სამყაროს გავლით.
-          ეს არის გზა იმ კითხვამდე, რომელსაც თითოეული
-          მკითხველი საბოლოოდ საკუთარ თავს დაუსვამს.
-        </p>
-      </div>
-    </section>
-
-    <section class="closing">
-      <p class="eyebrow">VI — ბოლო კითხვა</p>
-      <h2>არსად</h2>
+      <p class="section-label">II — ციკლი</p>
+      <h2>დაბადება არ არის დასაწყისი.<br>სიკვდილი არ არის დასასრული.</h2>
       <p>
-        როდესაც ყველაფერი, რისიც გჯეროდა, გაქრება,
-        რას აირჩევ — მისცემ ცხოვრებას ახალ აზრს,
-        თუ საბოლოოდ დაკარგავ მას?
+        წრე იკვრება.<br>
+        ცეცხლი ქრება.<br>
+        ფერფლიდან რაღაც კვლავ იბადება.
       </p>
-      <span class="author-name">ვასიკო ზუმბაძე</span>
-    </section>
-  </main>
+    </div>
+  </section>
 
-  <footer>
-    <a href="#home" class="footer-mark">არსად</a>
-    <span>მისტიკური · ფილოსოფიური რომანი</span>
-    <span>© ვასიკო ზუმბაძე</span>
-  </footer>
+  <section class="motifs">
+    <article class="motif reveal">
+      <div class="motif-symbol">◉</div>
+      <h3>წრე</h3>
+      <p>რაც მთავრდება, შესაძლოა<br>თავიდან იწყებოდეს.</p>
+    </article>
 
-  <script>
-    const revealItems = document.querySelectorAll(".reveal");
+    <article class="motif reveal">
+      <div class="motif-symbol">✳</div>
+      <h3>ლილი</h3>
+      <p>სიწმინდე სიბნელეში<br>და მსხვერპლი წინასწარმეტყველებაში.</p>
+    </article>
 
-    if ("IntersectionObserver" in window) {
-      const observer = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              entry.target.classList.add("visible");
-              observer.unobserve(entry.target);
-            }
-          });
-        },
-        { threshold: 0.14 }
-      );
+    <article class="motif reveal">
+      <div class="motif-symbol">♨</div>
+      <h3>ცეცხლი</h3>
+      <p>ის ანადგურებს.<br>ის გარდაქმნის.</p>
+    </article>
+  </section>
 
-      revealItems.forEach((item) => observer.observe(item));
-    } else {
-      revealItems.forEach((item) => item.classList.add("visible"));
+  <section class="author-section">
+    <div class="reveal">
+      <p class="section-label">ავტორი</p>
+      <h2>ვასიკო ზუმბაძე</h2>
+      <p>
+        „არსად“ — ამბავი ბედისწერაზე, რწმენაზე,
+        მსხვერპლსა და იმ ზღვარზე, სადაც ადამიანი
+        საკუთარ თავს უპირისპირდება.
+      </p>
+    </div>
+  </section>
+
+  <section class="closing">
+    <div class="reveal">
+      <p class="section-label">III — დასასრული?</p>
+      <h2>და თუ წრე<br>არასოდეს იხსნება?</h2>
+      <p>არსად არ არის ადგილი. იქნებ მდგომარეობაა.</p>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <span class="footer-title">არსად</span>
+  <span>ვასიკო ზუმბაძე · ყველა უფლება დაცულია</span>
+</footer>
+
+<script>
+/* მოძრავი ნაპერწკლები — მსუბუქი canvas ეფექტი */
+(() => {
+  const canvas = document.getElementById("embers");
+  const ctx = canvas.getContext("2d");
+  if (!ctx) return;
+
+  let width = 0;
+  let height = 0;
+  let embers = [];
+  let lastFrame = 0;
+
+  function resize() {
+    const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+    width = window.innerWidth;
+    height = window.innerHeight;
+    canvas.width = width * dpr;
+    canvas.height = height * dpr;
+    canvas.style.width = width + "px";
+    canvas.style.height = height + "px";
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+    const count = width < 600 ? 28 : 58;
+    embers = Array.from({ length: count }, () => createEmber(true));
+  }
+
+  function createEmber(initial = false) {
+    return {
+      x: Math.random() * width,
+      y: initial ? Math.random() * height : height + 8,
+      size: Math.random() * 1.8 + .5,
+      speed: Math.random() * .65 + .2,
+      drift: (Math.random() - .5) * .45,
+      alpha: Math.random() * .55 + .2,
+      phase: Math.random() * Math.PI * 2
+    };
+  }
+
+  function draw(time = 0) {
+    requestAnimationFrame(draw);
+    if (time - lastFrame < 32) return;
+    lastFrame = time;
+
+    ctx.clearRect(0, 0, width, height);
+
+    for (let i = 0; i < embers.length; i++) {
+      const p = embers[i];
+      p.y -= p.speed;
+      p.x += p.drift + Math.sin(time * .001 + p.phase) * .25;
+
+      if (p.y < -10 || p.x < -10 || p.x > width + 10) {
+        embers[i] = createEmber();
+        continue;
+      }
+
+      const flicker = .65 + Math.sin(time * .004 + p.phase) * .35;
+      ctx.beginPath();
+      ctx.fillStyle = `rgba(255, ${Math.floor(65 + flicker * 65)}, 35, ${p.alpha * flicker})`;
+      ctx.shadowBlur = 9;
+      ctx.shadowColor = "rgba(255, 56, 20, .6)";
+      ctx.arc(p.x, p.y, p.size * flicker, 0, Math.PI * 2);
+      ctx.fill();
     }
-  </script>
+
+    ctx.shadowBlur = 0;
+  }
+
+  resize();
+  window.addEventListener("resize", resize, { passive: true });
+  requestAnimationFrame(draw);
+})();
+
+/* სექციები ნელა ჩნდება ჩამოსქროლვისას */
+(() => {
+  const elements = document.querySelectorAll(".reveal");
+
+  if (!("IntersectionObserver" in window)) {
+    elements.forEach(el => el.classList.add("visible"));
+    return;
+  }
+
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("visible");
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+
+  elements.forEach(el => observer.observe(el));
+})();
+</script>
+
 </body>
 </html>
