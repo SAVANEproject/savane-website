@@ -3,1063 +3,851 @@
 <html lang="ka">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#030303">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>არსად — ვასიკო ზუმბაძე</title>
 <meta name="description" content="არსად — ვასიკო ზუმბაძის მეტაფიზიკური რომანი. შექმნა, ნგრევა და დაბრუნება.">
-
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Georgian:wght@300;400;500&family=Noto+Sans+Georgian:wght@300;400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Georgian:wght@300;400;500;600;700&family=Noto+Sans+Georgian:wght@300;400;500&display=swap" rel="stylesheet">
 
 <style>
 :root {
-  --black: #030303;
-  --white: #f5f2f0;
-  --grey: #a49b98;
-  --red: #9d2022;
-  --ember: #ff612b;
-  --line: rgba(255,255,255,.12);
+  --black:#070605;
+  --paper:#e9e0d4;
+  --muted:#a49a8e;
+  --ember:#ff6a32;
+  --red:#9d211b;
+  --gold:#d5a16c;
+  --serif:"Noto Serif Georgian",serif;
+  --sans:"Noto Sans Georgian",sans-serif;
 }
-
-* { box-sizing: border-box; margin: 0; padding: 0; }
-
-html {
-  background: var(--black);
-  scroll-behavior: smooth;
-  scrollbar-color: #70231c #030303;
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;background:var(--black)}
+body{
+  margin:0;background:var(--black);color:var(--paper);
+  font-family:var(--serif);overflow-x:hidden;
 }
-
-body {
-  background: var(--black);
-  color: var(--white);
-  font-family: "Noto Serif Georgian", serif;
-  font-weight: 300;
-  overflow-x: hidden;
+::selection{background:#9d211b;color:#fff3e8}
+a{color:inherit;text-decoration:none}
+button,input,textarea{font:inherit}
+button{color:inherit}
+#embers{
+  position:fixed;inset:0;width:100%;height:100%;
+  pointer-events:none;z-index:5;opacity:.82;
 }
-
-::selection { background: #9d2022; color: white; }
-
-a { color: inherit; text-decoration: none; }
-
-button { font: inherit; }
-
-#fire {
-  position: fixed;
-  z-index: 0;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  opacity: .95;
-}
-
-.ambient {
-  position: fixed;
-  z-index: 0;
-  inset: 0;
-  pointer-events: none;
+.heat{
+  position:fixed;inset:auto -15% -32vh;width:130%;height:62vh;
+  pointer-events:none;z-index:1;
   background:
-    radial-gradient(ellipse at 50% 105%,
-      rgba(255,54,15,.20), transparent 43%),
-    radial-gradient(ellipse at 50% 50%,
-      transparent 20%, rgba(0,0,0,.6) 100%);
+    radial-gradient(ellipse at 18% 100%,#a72a12aa 0,transparent 44%),
+    radial-gradient(ellipse at 50% 110%,#ed572344 0,transparent 48%),
+    radial-gradient(ellipse at 85% 100%,#a42b13aa 0,transparent 43%);
+  filter:blur(24px);animation:heat 7s ease-in-out infinite alternate;
 }
-
-nav {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  z-index: 10;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 28px 7%;
-  font-family: "Noto Sans Georgian", sans-serif;
-  font-size: 10px;
-  letter-spacing: 2px;
-  color: #c7bfbc;
+.heat:before,.heat:after{
+  content:"";position:absolute;bottom:0;width:100%;height:100%;
+  background:linear-gradient(0deg,#7b180d99,transparent 70%);
+  clip-path:polygon(0 100%,0 72%,5% 58%,9% 80%,15% 39%,20% 72%,26% 50%,31% 81%,37% 28%,43% 75%,49% 43%,55% 83%,62% 31%,68% 74%,73% 47%,79% 80%,85% 35%,91% 71%,96% 49%,100% 78%,100% 100%);
+  transform-origin:bottom;animation:flame 2.4s ease-in-out infinite alternate;
 }
-
-.logo { color: white; letter-spacing: 4px; font-size: 14px; }
-nav a:hover { color: var(--ember); }
-
-.hero {
-  position: relative;
-  z-index: 1;
-  min-height: 100svh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  padding: 110px 20px 95px;
-  overflow: hidden;
-  isolation: isolate;
+.heat:after{opacity:.7;filter:blur(14px);animation-duration:3.1s;animation-direction:alternate-reverse}
+@keyframes heat{from{transform:translateY(1vh) scaleX(1)}to{transform:translateY(-2vh) scaleX(1.04)}}
+@keyframes flame{from{transform:scaleY(.83) skewX(1deg)}to{transform:scaleY(1.12) skewX(-1deg)}}
+main,.site-header,footer{position:relative;z-index:2}
+.site-header{
+  position:absolute;top:0;left:0;width:100%;padding:27px 6vw;
+  display:flex;justify-content:space-between;align-items:center;gap:20px;
+  z-index:10;
 }
-
-.hero::before {
-  content: "";
-  position: absolute;
-  z-index: -1;
-  inset: 0;
+.brand{font-size:14px;letter-spacing:.22em;color:#f0dfcd}
+.nav{display:flex;gap:25px;align-items:center;font:11px var(--sans);color:#b7aa9b}
+.nav a{transition:color .3s}
+.nav a:hover{color:var(--ember)}
+.nav .buy-link{color:#f4b37d}
+.menu-button{display:none;background:none;border:0;font-size:23px}
+.hero{
+  min-height:100svh;position:relative;display:flex;align-items:center;
+  justify-content:center;text-align:center;padding:110px 20px 100px;overflow:hidden;
+}
+.hero:before{
+  content:"";position:absolute;inset:0;
   background:
-    radial-gradient(ellipse at center,
-      rgba(93,12,12,.12), transparent 48%),
-    linear-gradient(180deg,#030303 0%,transparent 70%,#0b0302 100%);
+    radial-gradient(ellipse at 50% 50%,#6d1c1240 0,transparent 30%),
+    radial-gradient(ellipse at 50% 110%,#b32e1438 0,transparent 52%),
+    linear-gradient(180deg,#050403 0%,#0b0706 62%,#110705 100%);
 }
-
-.hero::after {
-  content: "";
-  position: absolute;
-  z-index: -1;
-  width: 150%;
-  height: 30%;
-  left: -25%;
-  bottom: -12%;
-  background: linear-gradient(0deg,
-    rgba(255,53,15,.32),
-    rgba(182,22,10,.13) 30%,
-    transparent 85%);
-  filter: blur(35px);
-  animation: fireBreath 2.2s ease-in-out infinite alternate;
+.hero-content{position:relative;z-index:3;max-width:900px}
+.overline{font:10px var(--sans);letter-spacing:.38em;color:#c68b63;text-transform:uppercase}
+.hero h1{
+  margin:35px 0 12px;font-size:clamp(74px,15vw,190px);font-weight:300;
+  line-height:1.05;letter-spacing:.07em;
+  text-shadow:0 0 35px #c13b1835,0 0 100px #8f1d1530;
 }
-
-@keyframes fireBreath {
-  from { transform: translateY(10px) scaleX(.97); opacity: .65; }
-  to { transform: translateY(-8px) scaleX(1.04); opacity: 1; }
+.hero-subtitle{font-size:clamp(13px,2vw,18px);color:#c5b5a4;font-weight:300;letter-spacing:.13em}
+.hero-line{
+  width:1px;height:80px;margin:44px auto 24px;
+  background:linear-gradient(transparent,#c65a32,#f5b17b,transparent);
+  transform-origin:top;animation:lineGlow 3s ease-in-out infinite;
 }
+@keyframes lineGlow{0%,100%{opacity:.4;transform:scaleY(.8)}50%{opacity:1;transform:scaleY(1.12)}}
+.hero-quote{font-size:clamp(16px,2.4vw,23px);font-weight:300;line-height:2;color:#e3c9b0}
+.scroll-cue{margin-top:58px;font:9px var(--sans);letter-spacing:.3em;color:#8f7767}
+.scroll-cue span{display:block;margin-top:13px;color:var(--ember);font-size:18px;animation:down 2s infinite}
+@keyframes down{0%,100%{transform:translateY(0)}50%{transform:translateY(7px)}}
 
-.kicker {
-  font-family: "Noto Sans Georgian", sans-serif;
-  font-size: 10px;
-  letter-spacing: 5px;
-  color: #b7a6a1;
-  margin-bottom: 32px;
-  animation: appear 1.4s both;
+/* კოსმოსური წრებრუნვა */
+.cosmos{
+  position:absolute;width:min(83vw,760px);aspect-ratio:1;border-radius:50%;
+  left:50%;top:50%;transform:translate(-50%,-50%);opacity:.55;
+  pointer-events:none;
 }
-
-.title-frame {
-  position: relative;
-  display: grid;
-  place-items: center;
-  padding: 15px 38px;
+.cosmos:before,.cosmos:after{
+  content:"";position:absolute;border-radius:50%;inset:4%;
+  background:conic-gradient(from 0deg,transparent,#70211650,transparent,#e77c3b4a,transparent,#74201655,transparent);
+  mask:radial-gradient(transparent 60%,#000 60.5%,#000 61%,transparent 61.5%);
+  animation:orbit 45s linear infinite;
 }
-
-.title-frame::before,
-.title-frame::after {
-  content: "";
-  position: absolute;
-  width: 125%;
-  height: 95%;
-  border: 1px solid rgba(189,51,36,.36);
-  border-radius: 50%;
-  transform: rotate(-24deg) scaleY(.76);
-  animation: orbit 32s linear infinite;
+.cosmos:after{
+  inset:17%;transform:rotate(30deg);
+  background:conic-gradient(from 90deg,transparent,#e8b98c70,transparent,#9c382d55,transparent);
+  mask:radial-gradient(transparent 66%,#000 66.4%,#000 66.8%,transparent 67.2%);
+  animation:orbitBack 33s linear infinite;
 }
-
-.title-frame::after {
-  width: 110%;
-  height: 110%;
-  border-color: rgba(255,105,47,.14);
-  transform: rotate(38deg) scaleY(.7);
-  animation-duration: 45s;
-  animation-direction: reverse;
+.orbit{
+  position:absolute;inset:9%;border:1px solid #d7895640;border-radius:50%;
+  transform:rotate(-26deg) scaleY(.48);
 }
-
-@keyframes orbit {
-  to { rotate: 360deg; }
+.orbit.two{inset:15%;transform:rotate(54deg) scaleY(.62);border-color:#8c332e55}
+.orbit.three{inset:2%;transform:rotate(76deg) scaleY(.27);border-color:#e1a16a35}
+.star{
+  position:absolute;width:5px;height:5px;border-radius:50%;background:#ffb777;
+  box-shadow:0 0 14px 5px #e65a2c66;left:50%;top:8%;
+  transform-origin:0 330px;animation:starOrbit 17s linear infinite;
 }
+.star.s2{width:3px;height:3px;top:22%;transform-origin:0 210px;animation-duration:12s;animation-direction:reverse}
+.star.s3{top:36%;transform-origin:0 120px;animation-duration:8s}
+@keyframes orbit{to{transform:rotate(360deg)}}
+@keyframes orbitBack{to{transform:rotate(-360deg)}}
+@keyframes starOrbit{to{transform:rotate(360deg)}}
 
-h1 {
-  position: relative;
-  z-index: 2;
-  font-size: clamp(76px, 15vw, 172px);
-  line-height: 1.4;
-  letter-spacing: .06em;
-  font-weight: 300;
-  text-shadow: 0 0 45px rgba(255,255,255,.06);
-  animation: titleIn 1.8s .2s both;
+section{position:relative;padding:125px 7vw;overflow:hidden}
+.section-kicker{
+  color:#c67d55;font:10px var(--sans);letter-spacing:.32em;text-transform:uppercase;
+  margin-bottom:23px;
 }
-
-@keyframes titleIn {
-  from { opacity: 0; transform: translateY(20px); filter: blur(10px); }
-  to { opacity: 1; transform: translateY(0); filter: blur(0); }
+.section-title{font-size:clamp(29px,5vw,57px);font-weight:300;line-height:1.45;margin:0}
+.section-intro{max-width:700px;font-size:15px;line-height:2.25;color:#c6b9ab;font-weight:300}
+.origin{max-width:1000px;margin:auto;text-align:center}
+.origin .section-intro{margin:35px auto}
+.origin-statement{
+  margin:58px auto 0;max-width:850px;font-size:clamp(20px,3.5vw,36px);
+  line-height:1.9;font-weight:300;color:#e9d6c2;
 }
-
-.author {
-  margin-top: 27px;
-  font-size: 13px;
-  letter-spacing: 3px;
-  color: #d6cecb;
-  animation: appear 1.5s .7s both;
+.origin-statement em{color:#f08b53;font-style:normal}
+.breath{
+  width:100%;height:130px;position:relative;overflow:hidden;margin:55px 0 0;
+  mask-image:linear-gradient(90deg,transparent,#000 20%,#000 80%,transparent);
 }
-
-.hero-rule {
-  width: 1px;
-  height: 62px;
-  background: linear-gradient(transparent,#b53928,transparent);
-  margin: 34px 0 23px;
+.breath:before{
+  content:"";position:absolute;left:-10%;top:50%;width:120%;height:90px;
+  border-radius:50%;border-top:1px solid #d45b374d;
+  box-shadow:0 -8px 35px #962d1a14;transform:rotate(-4deg);
+  animation:wave 8s ease-in-out infinite alternate;
 }
-
-.hero-sub {
-  font-family: "Noto Sans Georgian", sans-serif;
-  color: #b8aeab;
-  font-size: 10px;
-  letter-spacing: 3px;
-  animation: appear 1.5s 1s both;
+.breath:after{
+  content:"";position:absolute;left:10%;top:45%;width:80%;height:70px;
+  border-radius:50%;border-top:1px solid #e8a46a44;transform:rotate(5deg);
+  animation:wave 6s ease-in-out infinite alternate-reverse;
 }
+@keyframes wave{from{transform:translateY(10px) rotate(-5deg) scaleX(.92)}to{transform:translateY(-12px) rotate(4deg) scaleX(1.05)}}
 
-@keyframes appear {
-  from { opacity: 0; transform: translateY(12px); }
-  to { opacity: 1; transform: translateY(0); }
+.cycle-section{
+  background:radial-gradient(ellipse at 50% 50%,#28100b 0,transparent 64%);
 }
-
-.scroll {
-  position: absolute;
-  bottom: 28px;
-  font-family: "Noto Sans Georgian", sans-serif;
-  color: #a49a97;
-  font-size: 9px;
-  letter-spacing: 3px;
+.cycle-wrap{max-width:1100px;margin:auto}
+.cycle-heading{text-align:center;margin-bottom:60px}
+.cycle-wheel{
+  width:min(78vw,510px);aspect-ratio:1;position:relative;margin:0 auto 55px;
+  border-radius:50%;display:grid;place-items:center;
 }
-
-.section {
-  position: relative;
-  z-index: 1;
-  padding: 135px 7%;
+.cycle-wheel:before{
+  content:"";position:absolute;inset:1%;border-radius:50%;
+  background:conic-gradient(from 0deg,transparent,#b94a2d75,#f5bd7a90,transparent,#7e201d90,transparent);
+  mask:radial-gradient(transparent 63%,#000 64%,#000 64.6%,transparent 65.5%);
+  animation:orbit 26s linear infinite;
 }
-
-.narrow { max-width: 900px; margin: auto; }
-
-.label {
-  color: #c44a3a;
-  font-family: "Noto Sans Georgian", sans-serif;
-  font-size: 10px;
-  letter-spacing: 4px;
-  margin-bottom: 32px;
+.cycle-wheel:after{
+  content:"";position:absolute;inset:12%;border-radius:50%;
+  border:1px solid #b85a3d32;box-shadow:inset 0 0 60px #a4381c15,0 0 70px #a4381c12;
 }
-
-.center { text-align: center; }
-
-.intro {
-  text-align: center;
-  padding-top: 160px;
-  padding-bottom: 170px;
+.cycle-core{
+  position:relative;z-index:2;text-align:center;max-width:65%;
 }
-
-.intro h2 {
-  font-size: clamp(25px,4.5vw,46px);
-  line-height: 2;
-  font-weight: 300;
+.cycle-core .small{font:9px var(--sans);letter-spacing:.3em;color:#c78560}
+.cycle-core strong{display:block;font-size:clamp(23px,4vw,40px);font-weight:300;margin:17px 0;letter-spacing:.1em}
+.cycle-core p{font-size:12px;line-height:2;color:#b5a294}
+.cycle-node{
+  position:absolute;z-index:3;width:105px;height:105px;display:grid;place-items:center;
+  text-align:center;border-radius:50%;font-size:13px;font-weight:300;
+  background:radial-gradient(circle,#2a100b 0,#110806 70%,transparent 100%);
+  color:#e8c5a6;text-shadow:0 0 18px #e65a2c33;
 }
+.cycle-node:nth-of-type(1){top:0;left:50%;transform:translateX(-50%)}
+.cycle-node:nth-of-type(2){right:-1%;bottom:17%}
+.cycle-node:nth-of-type(3){left:-1%;bottom:17%}
+.cycle-node small{display:block;font:8px var(--sans);letter-spacing:.16em;color:#bd704e;margin-top:7px}
+.cycle-words{display:grid;grid-template-columns:repeat(3,1fr);gap:35px;margin-top:25px}
+.cycle-words article{padding:0 8px}
+.cycle-words h3{font-weight:400;font-size:19px;color:#edc5a1;margin-bottom:15px}
+.cycle-words p{font-size:13px;line-height:2.1;color:#b9aa9c}
+.cycle-words article:nth-child(2) h3{color:#e98158}
+.cycle-words article:nth-child(3) h3{color:#d7a56f}
 
-.intro h2 em {
-  color: #c13a32;
-  font-style: normal;
+.characters{max-width:1200px;margin:auto}
+.character-heading{max-width:700px;margin-bottom:65px}
+.character{
+  display:grid;grid-template-columns:minmax(180px,.7fr) minmax(0,1.3fr);
+  gap:clamp(30px,8vw,100px);align-items:center;padding:45px 0;
+  position:relative;
 }
-
-.copy {
-  max-width: 670px;
-  margin: 34px auto 0;
-  font-family: "Noto Sans Georgian", sans-serif;
-  font-size: 13px;
-  line-height: 2.5;
-  color: var(--grey);
+.character+.character{margin-top:25px}
+.character:nth-of-type(even){grid-template-columns:minmax(0,1.3fr) minmax(180px,.7fr)}
+.character:nth-of-type(even) .symbol{order:2}
+.symbol{
+  min-height:270px;display:grid;place-items:center;position:relative;
+  color:#d77a52;
 }
-
-.quote {
-  padding: 110px 8%;
-  border-top: 1px solid var(--line);
-  border-bottom: 1px solid var(--line);
-  text-align: center;
-  background: radial-gradient(ellipse at center,
-    rgba(110,13,15,.12), transparent 70%);
+.symbol:before{
+  content:"";position:absolute;width:220px;height:220px;border-radius:50%;
+  background:radial-gradient(circle,#9e301b20,transparent 70%);
+  animation:symbolBreath 6s ease-in-out infinite alternate;
 }
-
-.quote-mark {
-  color: #a42c2a;
-  font-size: 35px;
-  margin-bottom: 22px;
+@keyframes symbolBreath{from{transform:scale(.8);opacity:.5}to{transform:scale(1.15);opacity:1}}
+.symbol svg{position:relative;width:min(100%,205px);height:220px;overflow:visible;filter:drop-shadow(0 0 18px #c2472420)}
+.symbol svg path,.symbol svg line,.symbol svg ellipse,.symbol svg circle,.symbol svg polyline{
+  vector-effect:non-scaling-stroke;
 }
+.lily svg{animation:sway 7s ease-in-out infinite;transform-origin:50% 100%}
+@keyframes sway{0%,100%{transform:rotate(-2deg)}50%{transform:rotate(2deg)}}
+.sword svg{filter:drop-shadow(0 0 12px #c9a17b22);animation:swordPulse 5s ease-in-out infinite}
+@keyframes swordPulse{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+.snake svg{animation:snakeSway 6s ease-in-out infinite}
+@keyframes snakeSway{0%,100%{transform:rotate(-2deg)}50%{transform:rotate(3deg)}}
+.character .name{font-size:clamp(31px,4vw,48px);font-weight:300;margin:0 0 17px}
+.character .role{font:10px var(--sans);letter-spacing:.23em;color:#c67b53;margin-bottom:25px}
+.character .description{max-width:600px;color:#c2b4a6;font-size:14px;line-height:2.25;font-weight:300}
+.character:nth-of-type(2) .role{color:#e1b58d}
+.character:nth-of-type(3) .role{color:#c96a52}
 
-.quote blockquote {
-  max-width: 920px;
-  margin: auto;
-  font-size: clamp(22px,3.8vw,39px);
-  line-height: 2;
-  font-weight: 300;
+.quotes{padding-top:95px;padding-bottom:110px;background:radial-gradient(ellipse at 50% 50%,#1b0b08 0,transparent 70%)}
+.quotes-inner{max-width:1000px;margin:auto}
+.quotes-heading{text-align:center;margin-bottom:60px}
+.quote-flow{display:grid;grid-template-columns:1fr 1fr;column-gap:clamp(25px,8vw,100px);row-gap:58px;align-items:center}
+.quote{
+  position:relative;padding:8px 0 8px 22px;border-left:1px solid #a8472c75;
+  font-size:clamp(16px,2.1vw,22px);font-weight:300;line-height:2;color:#e9d5c0;
+  transition:transform .5s ease,color .5s ease;
 }
-
-.quote-caption {
-  margin-top: 27px;
-  font-family: "Noto Sans Georgian", sans-serif;
-  color: #948885;
-  font-size: 10px;
-  letter-spacing: 2px;
+.quote:nth-child(even){transform:translateY(30px);border-left-color:#d39b6555}
+.quote:hover{transform:translateY(-3px);color:#fff0df}
+.quote:nth-child(even):hover{transform:translateY(24px)}
+.quote:before{
+  content:"";position:absolute;left:-2px;top:0;height:28px;width:3px;
+  background:linear-gradient(transparent,#e57b4c,transparent);
 }
+.quote .quote-mark{display:block;font-size:40px;line-height:1;color:#bb5a39;margin-bottom:15px;opacity:.7}
+.quote small{display:block;font:9px var(--sans);letter-spacing:.2em;color:#8d7665;margin-top:18px}
 
-.cosmos {
-  text-align: center;
-  overflow: hidden;
+.chapters-section{background:linear-gradient(180deg,transparent,#100705 20%,#0d0705 80%,transparent)}
+.chapters-wrap{max-width:1100px;margin:auto}
+.chapters-top{display:flex;justify-content:space-between;gap:35px;align-items:end;margin-bottom:45px}
+.chapters-top .intro{max-width:570px}
+.chapters-top .intro p{font-size:13px;line-height:2;color:#b5a597}
+.purchase{
+  flex-shrink:0;display:inline-flex;align-items:center;gap:13px;
+  padding:15px 20px;color:#f0bc92;font:11px var(--sans);letter-spacing:.05em;
+  background:linear-gradient(120deg,#46170f99,#1a0b07aa);
+  border:1px solid #b45b3b55;transition:background .3s,transform .3s;
 }
-
-.cosmic-orbit {
-  width: min(58vw,290px);
-  aspect-ratio: 1;
-  margin: 0 auto 60px;
-  border: 1px solid rgba(202,60,41,.45);
-  border-radius: 50%;
-  display: grid;
-  place-items: center;
-  position: relative;
-  box-shadow: 0 0 75px rgba(164,21,16,.10),
-              inset 0 0 60px rgba(164,21,16,.08);
-  animation: pulse 5s ease-in-out infinite alternate;
+.purchase:hover{background:#5b2015;transform:translateY(-2px)}
+.purchase span{font-size:17px}
+.chapter-groups{display:grid;grid-template-columns:1fr 1fr;gap:45px 70px}
+.chapter-group h3{
+  font-size:17px;font-weight:400;color:#d7a57d;margin:0 0 23px;
+  padding-bottom:12px;
 }
-
-.cosmic-orbit::before {
-  content: "";
-  position: absolute;
-  inset: 12%;
-  border: 1px solid rgba(255,104,51,.35);
-  border-radius: 50%;
-  transform: rotateX(65deg);
+.chapter-list{list-style:none;padding:0;margin:0}
+.chapter-list li{margin:0}
+.chapter-button{
+  width:100%;display:flex;justify-content:space-between;align-items:baseline;gap:18px;
+  padding:11px 0;background:none;border:0;text-align:left;cursor:pointer;
+  color:#c6b9ac;font-size:13px;line-height:1.9;font-weight:300;
+  transition:color .25s,padding .25s;
 }
-
-.cosmic-orbit::after {
-  content: "";
-  position: absolute;
-  inset: -5%;
-  border: 1px dashed rgba(180,50,37,.28);
-  border-radius: 50%;
-  animation: orbit 55s linear infinite;
+.chapter-button:hover{color:#f5b17b;padding-left:7px}
+.chapter-button .chapter-num{color:#85513b;font:10px var(--sans);min-width:36px}
+.chapter-button .chapter-name{flex:1}
+.chapter-button .plus{font:16px var(--sans);color:#99563c;transition:transform .3s}
+.chapter-button[aria-expanded="true"] .plus{transform:rotate(45deg);color:#f2a16b}
+.chapter-content{
+  display:none;padding:0 0 18px 36px;color:#a99a8d;
+  font-size:12px;line-height:2;
 }
+.chapter-content.open{display:block;animation:appear .45s ease}
+@keyframes appear{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+.chapter-content .read-note{font-style:italic;color:#8e7b6b}
+.chapter-content a{display:inline-block;margin-top:10px;color:#e6a273;font-size:11px}
+.purchase-note{font:10px var(--sans);color:#826f60;line-height:1.9;margin-top:15px}
 
-.cosmic-orbit span {
-  color: #e8deda;
-  font-size: 13px;
-  letter-spacing: 4px;
+.feedback{max-width:900px;margin:auto}
+.feedback-layout{display:grid;grid-template-columns:.8fr 1.2fr;gap:65px;align-items:start}
+.feedback-copy p{font-size:13px;line-height:2.2;color:#b7a799}
+.feedback-form{display:grid;gap:19px}
+.field{display:grid;gap:9px}
+.field label{font:10px var(--sans);letter-spacing:.12em;color:#c59a7b}
+.field input,.field textarea{
+  width:100%;background:#120a07;color:var(--paper);border:0;
+  border-bottom:1px solid #a44b304d;padding:13px 2px;outline:none;
+  font:13px var(--serif);border-radius:0;transition:border-color .3s;
 }
-
-@keyframes pulse {
-  from { box-shadow: 0 0 30px rgba(164,21,16,.06); }
-  to { box-shadow: 0 0 90px rgba(164,21,16,.18); }
+.field input:focus,.field textarea:focus{border-color:#df8051}
+.field textarea{min-height:125px;resize:vertical;line-height:1.9}
+.field input::placeholder,.field textarea::placeholder{color:#76675b}
+.send{
+  justify-self:start;padding:13px 22px;background:none;border:1px solid #a954375c;
+  color:#edb38b;font:11px var(--sans);cursor:pointer;transition:all .3s;
 }
-
-.cosmos h2 {
-  font-size: clamp(25px,4vw,42px);
-  line-height: 1.9;
-  font-weight: 300;
+.send:hover{background:#4b1b12;border-color:#c66a45}
+.form-note{font:10px var(--sans);color:#8b796a;line-height:1.9}
+footer{
+  text-align:center;padding:75px 20px 50px;
+  background:linear-gradient(180deg,transparent,#0b0504);
 }
+.footer-title{font-size:clamp(35px,7vw,72px);font-weight:300;letter-spacing:.1em;color:#e9d4c0}
+.footer-line{font-size:13px;line-height:2;color:#a58d7a;margin:18px auto 30px}
+.copyright{font:9px var(--sans);letter-spacing:.16em;color:#6e5a4d}
 
-.cosmos .copy { max-width: 600px; }
-
-.triptych {
-  display: grid;
-  grid-template-columns: repeat(3,minmax(0,1fr));
-  border-top: 1px solid var(--line);
-  border-bottom: 1px solid var(--line);
+.reveal{opacity:0;transform:translateY(24px);transition:opacity 1s ease,transform 1s cubic-bezier(.2,.7,.2,1)}
+.reveal.visible{opacity:1;transform:translateY(0)}
+@media(prefers-reduced-motion:reduce){
+  *,*:before,*:after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.01ms!important}
+  .reveal{opacity:1;transform:none}
 }
-
-.triptych article {
-  padding: 58px 30px;
-  text-align: center;
-  border-right: 1px solid var(--line);
-}
-
-.triptych article:last-child { border-right: 0; }
-
-.symbol {
-  font-size: 30px;
-  color: #b5362d;
-  margin-bottom: 25px;
-}
-
-.triptych h3 {
-  font-size: 19px;
-  font-weight: 400;
-  margin-bottom: 20px;
-}
-
-.triptych p {
-  color: var(--grey);
-  font-family: "Noto Sans Georgian",sans-serif;
-  font-size: 12px;
-  line-height: 2.3;
-}
-
-.characters {
-  max-width: 940px;
-  margin: auto;
-}
-
-.character {
-  display: grid;
-  grid-template-columns: 80px 1fr;
-  gap: 30px;
-  padding: 37px 0;
-  border-bottom: 1px solid var(--line);
-}
-
-.character-number {
-  color: #a62e28;
-  font-size: 20px;
-  padding-top: 4px;
-}
-
-.character h3 {
-  font-size: clamp(21px,3vw,29px);
-  font-weight: 300;
-  margin-bottom: 17px;
-}
-
-.character p {
-  font-family: "Noto Sans Georgian",sans-serif;
-  font-size: 13px;
-  color: #aaa09d;
-  line-height: 2.4;
-}
-
-.quotes-grid {
-  display: grid;
-  grid-template-columns: repeat(2,minmax(0,1fr));
-  gap: 1px;
-  background: rgba(255,255,255,.09);
-  border: 1px solid rgba(255,255,255,.09);
-}
-
-.quote-card {
-  background: #070707;
-  padding: 32px;
-  min-height: 160px;
-  display: flex;
-  align-items: center;
-  font-size: clamp(16px,2vw,21px);
-  line-height: 2;
-}
-
-.chapters-wrap {
-  max-width: 850px;
-  margin: auto;
-}
-
-.chapters-intro {
-  color: var(--grey);
-  font-family: "Noto Sans Georgian",sans-serif;
-  font-size: 12px;
-  line-height: 2.2;
-  margin: 0 0 35px;
-}
-
-.chapter-group {
-  border-top: 1px solid var(--line);
-}
-
-.chapter-toggle {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 20px;
-  width: 100%;
-  padding: 24px 5px;
-  border: 0;
-  color: var(--white);
-  background: transparent;
-  text-align: left;
-  cursor: pointer;
-  font-size: 16px;
-}
-
-.chapter-toggle span:last-child {
-  color: #bd4837;
-  font-family: "Noto Sans Georgian",sans-serif;
-  font-size: 20px;
-}
-
-.chapter-toggle:hover { color: #ffb19a; }
-
-.chapter-list {
-  display: none;
-  padding: 0 0 25px 15px;
-}
-
-.chapter-group.open .chapter-list { display: block; }
-
-.chapter-link {
-  display: block;
-  width: 100%;
-  padding: 13px 15px;
-  color: #bcb2af;
-  background: transparent;
-  border: 0;
-  border-left: 1px solid rgba(177,48,36,.25);
-  text-align: left;
-  font-family: "Noto Serif Georgian",serif;
-  font-size: 13px;
-  line-height: 1.8;
-  cursor: pointer;
-  transition: .25s;
-}
-
-.chapter-link:hover,
-.chapter-link.active {
-  color: white;
-  border-left-color: var(--ember);
-  background: linear-gradient(90deg,rgba(164,32,23,.14),transparent);
-}
-
-.chapter-detail {
-  display: none;
-  margin-top: 28px;
-  padding: 32px;
-  border: 1px solid rgba(175,52,37,.3);
-  background: rgba(15,7,6,.8);
-}
-
-.chapter-detail.visible { display: block; }
-
-.chapter-detail h3 {
-  font-size: 22px;
-  font-weight: 300;
-  line-height: 1.8;
-}
-
-.chapter-detail p {
-  margin-top: 16px;
-  color: var(--grey);
-  font-family: "Noto Sans Georgian",sans-serif;
-  font-size: 12px;
-  line-height: 2.2;
-}
-
-.closing {
-  text-align: center;
-  padding-top: 160px;
-  padding-bottom: 150px;
-  background: radial-gradient(ellipse at 50% 100%,
-    rgba(142,20,14,.2),transparent 60%);
-}
-
-.closing h2 {
-  font-size: clamp(36px,7vw,78px);
-  font-weight: 300;
-  line-height: 1.7;
-}
-
-.closing p {
-  font-family: "Noto Sans Georgian",sans-serif;
-  font-size: 12px;
-  color: #b74b3b;
-  margin-top: 25px;
-  letter-spacing: 2px;
-}
-
-footer {
-  position: relative;
-  z-index: 2;
-  border-top: 1px solid var(--line);
-  padding: 28px 7%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 20px;
-  color: #89807d;
-  font-family: "Noto Sans Georgian",sans-serif;
-  font-size: 10px;
-}
-
-footer strong {
-  color: #e5dcd9;
-  letter-spacing: 3px;
-  font-weight: 400;
-}
-
-.reveal {
-  opacity: 0;
-  transform: translateY(22px);
-  transition: opacity 1s ease,transform 1s ease;
-}
-
-.reveal.visible { opacity: 1; transform: none; }
-
-@media(max-width:700px) {
-  nav { padding: 22px 6%; font-size: 9px; }
-  .kicker { letter-spacing: 3px; }
-  .hero-sub { letter-spacing: 1.5px; }
-  .section { padding: 100px 7%; }
-  .intro { padding-top: 115px; padding-bottom: 120px; }
-  .quote { padding: 85px 7%; }
-  .triptych { grid-template-columns: 1fr; }
-  .triptych article {
-    border-right: 0;
-    border-bottom: 1px solid var(--line);
-    padding: 40px 25px;
-  }
-  .triptych article:last-child { border-bottom: 0; }
-  .character { grid-template-columns: 35px 1fr; gap: 15px; }
-  .quotes-grid { grid-template-columns: 1fr; }
-  .quote-card { min-height: 120px; padding: 25px; }
-  .chapter-toggle { font-size: 14px; }
-  .chapter-link { font-size: 12px; }
-  footer { flex-direction: column; text-align: center; }
-}
-
-@media(prefers-reduced-motion:reduce) {
-  *,*::before,*::after {
-    animation-duration: .01ms !important;
-    animation-iteration-count: 1 !important;
-    scroll-behavior: auto !important;
-    transition-duration: .01ms !important;
-  }
+@media(max-width:760px){
+  .site-header{padding:20px 6vw}
+  .nav{gap:13px}
+  .nav a:not(.buy-link){display:none}
+  .menu-button{display:block}
+  .hero{min-height:92svh}
+  .cosmos{width:110vw}
+  section{padding:90px 7vw}
+  .cycle-words{grid-template-columns:1fr;gap:20px}
+  .cycle-words article{text-align:center;max-width:500px;margin:auto}
+  .cycle-wheel{width:min(82vw,420px)}
+  .cycle-node{width:80px;height:80px;font-size:11px}
+  .character,.character:nth-of-type(even){grid-template-columns:1fr;gap:10px;padding:30px 0}
+  .character:nth-of-type(even) .symbol{order:0}
+  .symbol{min-height:190px}
+  .symbol svg{height:180px}
+  .character .description{max-width:none}
+  .quote-flow{grid-template-columns:1fr;row-gap:36px}
+  .quote:nth-child(even),.quote:nth-child(even):hover{transform:none}
+  .chapters-top{align-items:start;flex-direction:column}
+  .chapter-groups{grid-template-columns:1fr;gap:35px}
+  .feedback-layout{grid-template-columns:1fr;gap:30px}
 }
 </style>
 </head>
 
 <body>
-<canvas id="fire" aria-hidden="true"></canvas>
-<div class="ambient" aria-hidden="true"></div>
+<canvas id="embers" aria-hidden="true"></canvas>
+<div class="heat" aria-hidden="true"></div>
 
-<nav>
-  <a href="#top" class="logo">ვ. ზ.</a>
-  <a href="#chapters">წიგნის თავები ↓</a>
-</nav>
-
-<header class="hero" id="top">
-  <p class="kicker">მეტაფიზიკური რომანი</p>
-  <div class="title-frame"><h1>არსად</h1></div>
-  <p class="author">ვასიკო ზუმბაძე</p>
-  <div class="hero-rule"></div>
-  <p class="hero-sub">შექმნა · ნგრევა · დაბრუნება</p>
-  <a class="scroll" href="#beginning">ჩასვლა სიბნელეში ↓</a>
+<header class="site-header">
+  <a class="brand" href="#home">არსად</a>
+  <nav class="nav" aria-label="მთავარი ნავიგაცია">
+    <a href="#world">სამყარო</a>
+    <a href="#characters">პერსონაჟები</a>
+    <a href="#chapters">თავები</a>
+    <a href="#feedback">უკუკავშირი</a>
+    <a class="buy-link" href="#purchase">შეძენა ↗</a>
+  </nav>
 </header>
 
 <main>
-  <section class="section intro" id="beginning">
-    <div class="narrow reveal">
-      <p class="label">პროლოგი</p>
-      <h2>
-        სამყარო ცდილობს,<br>
-        საკუთარ თავს ჩახედოს თვალებში.<br>
-        <em>მაგრამ რას დაინახავს?</em>
-      </h2>
-      <p class="copy">
-        „არსად“ არის სამყაროს მცდელობა, საკუთარ თავს ჩახედოს თვალებში —
-        და ადამიანის ტრაგედია, რომ ამ მზერაში ღმერთსაც ეძებს, საკუთარ
-        თავსაც და იმ პირველ ცოდნასაც, რომლის შემდეგაც არსებობა
-        ვეღარასოდეს იქნება უდანაშაულო.
-      </p>
+<section class="hero" id="home">
+  <div class="cosmos" aria-hidden="true">
+    <div class="orbit"></div><div class="orbit two"></div><div class="orbit three"></div>
+    <i class="star"></i><i class="star s2"></i><i class="star s3"></i>
+  </div>
+  <div class="hero-content">
+    <div class="overline">მეტაფიზიკური რომანი</div>
+    <h1>არსად</h1>
+    <div class="hero-subtitle">ვასიკო ზუმბაძე</div>
+    <div class="hero-line"></div>
+    <div class="hero-quote">იყო არაფერი.</div>
+    <div class="scroll-cue">შეაბიჯე სიჩუმეში <span>⌄</span></div>
+  </div>
+</section>
+
+<section id="world">
+  <div class="origin reveal">
+    <div class="section-kicker">არსებობის პირველი ნაპერწკალი</div>
+    <h2 class="section-title">სამყარო საკუთარ თავს უყურებს.</h2>
+    <p class="section-intro">
+      „არსად“ სამყაროს მცდელობაა, საკუთარ თვალებში ჩაიხედოს — და ადამიანის ტრაგედია,
+      რომ ამ მზერაში ღმერთს, საკუთარ თავსა და პირველ ცოდნას ეძებს, რომლის შემდეგაც
+      არსებობა ვეღარასოდეს იქნება უდანაშაულო.
+    </p>
+    <div class="breath" aria-hidden="true"></div>
+    <p class="origin-statement">
+      ეს არის <em>შექმნისა და ნგრევის</em> ამბავი, სადაც სიკვდილი დასასრული არ არის,
+      დაბადება — დასაწყისი, და ყოველი პასუხი ახალ საიდუმლოს შობს.
+    </p>
+    <p class="section-intro">
+      არსებობა ცდილობს გაიხსენოს რაღაც დაკარგული, მაგრამ აღარ ახსოვს, რა დაკარგა.
+      იგი ბრუნდება სათავესთან — და ყოველ დაბრუნებაზე სამყარო თავიდან იბადება,
+      თუმცა პირველს აღარასოდეს ემთხვევა.
+    </p>
+  </div>
+</section>
+
+<section class="cycle-section">
+  <div class="cycle-wrap">
+    <div class="cycle-heading reveal">
+      <div class="section-kicker">კოსმოსური კანონი</div>
+      <h2 class="section-title">არც დასაწყისი. არც დასასრული.</h2>
     </div>
-  </section>
-
-  <section class="quote">
-    <div class="reveal">
-      <div class="quote-mark">✳</div>
-      <blockquote>„იყო არაფერი.“</blockquote>
-      <p class="quote-caption">სანამ არსებობა საკუთარ სახელს იპოვიდა.</p>
-    </div>
-  </section>
-
-  <section class="section cosmos">
-    <div class="reveal">
-      <div class="cosmic-orbit"><span>უსასრულობა</span></div>
-      <p class="label">I — კოსმოლოგია</p>
-      <h2>დაბადება არ არის დასაწყისი.<br>სიკვდილი არ არის დასასრული.</h2>
-      <p class="copy">
-        თითქოს არსებობა საკუთარ საწყისს უბრუნდება, მაგრამ ყოველ
-        დაბრუნებაზე რაღაც იცვლება: სამყარო ხელახლა იქმნება,
-        თუმცა ვეღარასოდეს იქნება პირველი სამყაროს იდენტური.
-      </p>
-    </div>
-  </section>
-
-  <section class="triptych">
-    <article class="reveal">
-      <div class="symbol">◉</div>
-      <h3>შექმნა</h3>
-      <p>პირველი ნაპერწკალი.<br>სინათლე სიცარიელეში.</p>
-    </article>
-    <article class="reveal">
-      <div class="symbol">✳</div>
-      <h3>ნგრევა</h3>
-      <p>რაც იქმნება, იცვლება.<br>რაც ინგრევა, კვალს ტოვებს.</p>
-    </article>
-    <article class="reveal">
-      <div class="symbol">♨</div>
-      <h3>დაბრუნება</h3>
-      <p>წრე კვლავ იკვრება.<br>მაგრამ არაფერი მეორდება უცვლელად.</p>
-    </article>
-  </section>
-
-  <section class="section">
-    <div class="characters reveal">
-      <p class="label">II — ადამიანები და ძალები</p>
-
-      <article class="character">
-        <div class="character-number">I</div>
-        <div>
-          <h3>ლილი — პასუხი, რომელიც კითხვად რჩება</h3>
-          <p>
-            ლილი ამ სამყაროში მხოლოდ ადამიანიც არ არის და მხოლოდ
-            სიმბოლოც — ის არის ზღვარი, რომელზეც ერთმანეთს ხვდება
-            სხეული და კოსმოსი, სიცოცხლე და სიკვდილი, შექმნა და ნგრევა.
-            ის თითქოს პასუხია, რომელიც სამყარომ საკუთარ თავს გასცა,
-            თუმცა თავადაც არ იცის, რისთვის დაიბადა.
-          </p>
-        </div>
-      </article>
-
-      <article class="character">
-        <div class="character-number">II</div>
-        <div>
-          <h3>დორხანი — გარდაუვალობის ტყვე</h3>
-          <p>
-            თუ ყველაფერი დაწერილია, ვინ არის დამნაშავე — ადამიანი,
-            რომელიც მოქმედებს, თუ ძალა, რომელმაც მისი გზა განსაზღვრა?
-            დორხანი ბედისწერის აღმსრულებელიცაა და მისი ტყვეც;
-            შესაძლოა, სწორედ იმ წესრიგის დაცვით ანგრევდეს იმას,
-            რისი დაცვაც სურს.
-          </p>
-        </div>
-      </article>
-
-      <article class="character">
-        <div class="character-number">III</div>
-        <div>
-          <h3>აიდა — პასუხის მომთხოვნი</h3>
-          <p>
-            აიდა გასასვლელს იქაც ეძებს, სადაც სხვები ჩიხს ხედავენ.
-            მას სურს, უხილავი ძალის თამაშში მოთამაშე გახდეს და არა
-            მის ნებაზე დამოკიდებული ფიგურა — მაგრამ შესაძლოა,
-            სწორედ ეს ბრძოლა აქცევდეს მას იმ ძალის ნაწილად,
-            რომლისგანაც გათავისუფლებას ცდილობს.
-          </p>
-        </div>
-      </article>
-    </div>
-  </section>
-
-  <section class="section">
-    <div class="narrow reveal">
-      <p class="label">III — ფრაზები რომანიდან</p>
-      <div class="quotes-grid">
-        <div class="quote-card">„რასაც კლავთ, ბოლოს იმას ემსგავსებით.“</div>
-        <div class="quote-card">„ცოდნა და სიმშვიდე შენი ნიჭია, თუნდაც სიკვდილი ახლოს იდგეს.“</div>
-        <div class="quote-card">„სიკვდილი თავისას მაინც წაიღებს.“</div>
-        <div class="quote-card">„თქვა თვალმა: იყოს ნათელი! და იქმნა ნათელი.“</div>
-        <div class="quote-card">„ჯერ არც სიტყვა იყო და არც ხმა — უფრო შეგრძნება. გაბრიელამდე მხოლოდ მისი ნარჩენი აღწევდა.“</div>
-        <div class="quote-card">„თითქოს ცხენზე კი არა, საკუთარ სხეულში იჯდა, თუმცა არც იქ იცოდა, როგორ აღმოჩნდა.“</div>
+    <div class="cycle-wheel reveal" aria-label="შექმნის, ნგრევისა და დაბრუნების სიმბოლო">
+      <div class="cycle-node">შექმნა<small>დაბადება</small></div>
+      <div class="cycle-node">ნგრევა<small>დაშლა</small></div>
+      <div class="cycle-node">დაბრუნება<small>ხელახლა</small></div>
+      <div class="cycle-core">
+        <div class="small">არსებობის წრებრუნვა</div>
+        <strong>იყო არაფერი.</strong>
+        <p>ყველაფერი უბრუნდება სათავეს.<br>მაგრამ სათავე აღარ არის იგივე.</p>
       </div>
     </div>
-  </section>
+    <div class="cycle-words reveal">
+      <article>
+        <h3>შექმნა</h3>
+        <p>პირველი მოძრაობა სიჩუმეში. ფორმა, რომელიც არაფრისგან იბადება და საკუთარ საზღვრებს ჯერ ვერ ცნობს.</p>
+      </article>
+      <article>
+        <h3>ნგრევა</h3>
+        <p>წესრიგი ირღვევა. ის, რაც არსებობდა, საკუთარ საწყისს უბრუნდება — ტკივილის, ცოდნისა და დანაკარგის გავლით.</p>
+      </article>
+      <article>
+        <h3>დაბრუნება</h3>
+        <p>სამყარო კვლავ იწყება, მაგრამ მასში უკვე დარჩენილია წინა არსებობის უხილავი კვალი.</p>
+      </article>
+    </div>
+  </div>
+</section>
 
-  <section class="section" id="chapters">
-    <div class="chapters-wrap reveal">
-      <p class="label">IV — წიგნის სტრუქტურა</p>
-      <h2 style="font-weight:300;font-size:clamp(27px,4vw,42px);line-height:1.8;margin-bottom:20px">
-        თავები
-      </h2>
-      <p class="chapters-intro">
-        აირჩიე თავი და გახსენი მისი გვერდი. ამჟამად აქ მოცემულია
-        თავების სათაურები; სრული ტექსტები დაემატება ცალკე, როცა
-        მათ გამოსაქვეყნებლად მოამზადებ.
-      </p>
+<section id="characters">
+  <div class="characters">
+    <div class="character-heading reveal">
+      <div class="section-kicker">ხორცი და სიმბოლო</div>
+      <h2 class="section-title">ისინი, ვინც კანონს ეჯახებიან.</h2>
+      <p class="section-intro">სამი გზა, სამი ნება და უხილავი ძალა, რომლის არსებობაც შეიძლება მხოლოდ მაშინ გახდეს ცხადი, როცა მის წინააღმდეგ ბრძოლას დაიწყებ.</p>
+    </div>
 
-      <div id="chapter-groups"></div>
-
-      <div class="chapter-detail" id="chapter-detail" aria-live="polite">
-        <p class="label">არჩეული თავი</p>
-        <h3 id="chapter-name"></h3>
-        <p id="chapter-note">
-          ამ თავის ტექსტი ჯერ არ არის დამატებული.
+    <article class="character reveal">
+      <div class="symbol lily" aria-label="შროშანი — ლილის სიმბოლო">
+        <svg viewBox="0 0 180 220" fill="none" role="img" aria-label="შროშანის ხაზოვანი ილუსტრაცია">
+          <g stroke="#e1a477" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M91 199 C89 165 92 128 90 85"/>
+            <path d="M90 161 C66 143 49 146 38 160 C57 171 76 173 90 161Z" fill="#6b2b20" fill-opacity=".35"/>
+            <path d="M91 178 C110 156 130 158 142 172 C125 187 105 188 91 178Z" fill="#6b2b20" fill-opacity=".35"/>
+            <path d="M90 90 C65 77 57 52 68 30 C83 43 91 63 90 90Z" fill="#7e3024" fill-opacity=".38"/>
+            <path d="M90 90 C106 62 105 39 93 20 C82 43 83 67 90 90Z" fill="#a7432d" fill-opacity=".35"/>
+            <path d="M90 90 C111 78 130 57 124 35 C103 48 92 67 90 90Z" fill="#7e3024" fill-opacity=".4"/>
+            <path d="M90 90 C117 92 139 82 148 62 C123 63 102 74 90 90Z" fill="#a7432d" fill-opacity=".28"/>
+            <path d="M90 90 C66 96 43 88 33 68 C57 66 78 77 90 90Z" fill="#a7432d" fill-opacity=".28"/>
+            <path d="M90 90 C76 72 76 47 87 33 C97 52 97 72 90 90Z"/>
+            <path d="M90 90 C76 86 63 74 59 61 M90 90 C105 80 115 65 118 53"/>
+            <path d="M90 90 L90 112 M84 105 L90 112 L96 105"/>
+            <circle cx="90" cy="89" r="4" fill="#f1c08c" stroke="#f1c08c"/>
+          </g>
+          <g stroke="#c86c4b" stroke-width=".7" opacity=".6">
+            <path d="M90 199 C76 180 66 177 52 177"/>
+            <path d="M91 199 C106 182 121 180 133 180"/>
+          </g>
+        </svg>
+      </div>
+      <div>
+        <h3 class="name">ლილი</h3>
+        <div class="role">შროშანი · შექმნისა და ნგრევის საზღვარი</div>
+        <p class="description">
+          ლილი მხოლოდ ადამიანი არ არის და არც მხოლოდ სიმბოლო. ის საზღვარია, სადაც სხეული
+          კოსმოსს ხვდება, სიცოცხლე — სიკვდილს, ხოლო შექმნა — ნგრევას. მისი ტკივილი პირად
+          საზღვრებს სცდება. თითქოს სამყარომ საკუთარ თავს პასუხი გასცა, მაგრამ ეს პასუხი
+          კითხვად დარჩა: რატომ დაიბადა?
         </p>
       </div>
-    </div>
-  </section>
+    </article>
 
-  <section class="section closing">
-    <div class="reveal">
-      <p class="label">V — დაბრუნება</p>
-      <h2>იყო არაფერი.</h2>
-      <p>ვასიკო ზუმბაძე · „არსად“</p>
+    <article class="character reveal">
+      <div class="symbol sword" aria-label="ხმალი — დორხანის სიმბოლო">
+        <svg viewBox="0 0 180 220" fill="none" role="img" aria-label="ხმლის ხაზოვანი ილუსტრაცია">
+          <defs>
+            <linearGradient id="blade" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#f0d7b5"/>
+              <stop offset=".45" stop-color="#b5a18b"/>
+              <stop offset="1" stop-color="#6b493b"/>
+            </linearGradient>
+          </defs>
+          <g stroke-linecap="round" stroke-linejoin="round">
+            <path d="M90 18 L108 126 L90 151 L72 126 Z" fill="url(#blade)" fill-opacity=".5" stroke="#e0c4a2" stroke-width="1.2"/>
+            <path d="M90 20 L90 143" stroke="#f5e6cf" stroke-width=".8" opacity=".8"/>
+            <path d="M72 126 L108 126" stroke="#f0bd8b" stroke-width="2"/>
+            <path d="M90 151 L90 190" stroke="#d5a16c" stroke-width="4"/>
+            <path d="M80 160 L100 160 M80 169 L100 169 M82 178 L98 178" stroke="#5d2b20" stroke-width="2"/>
+            <path d="M77 188 Q90 202 103 188 L100 182 L80 182 Z" fill="#772b20" stroke="#d5a16c" stroke-width="1.2"/>
+            <path d="M66 120 Q90 133 114 120 L109 129 Q90 142 71 129 Z" fill="#7b3022" stroke="#d5a16c" stroke-width="1.2"/>
+            <path d="M90 18 L90 8" stroke="#f0c18f" stroke-width="1"/>
+          </g>
+        </svg>
+      </div>
+      <div>
+        <h3 class="name">დორხანი</h3>
+        <div class="role">ხმალი · რწმენა და გარდაუვალობა</div>
+        <p class="description">
+          დორხანი გარდაუვალობას წესრიგად აქცევს. წინასწარმეტყველებისადმი რწმენით ცდილობს
+          სამყაროს კანონის შესრულებას და ვერ ამჩნევს, სად მთავრდება მორჩილება და იწყება
+          საკუთარი ნება. მისი ტრაგედიაა შესაძლებლობა, რომ წესრიგის დაცვით სწორედ ის
+          გაანადგუროს, რისი გადარჩენაც სურს.
+        </p>
+      </div>
+    </article>
+
+    <article class="character reveal">
+      <div class="symbol snake" aria-label="გველი — აიდას სიმბოლო">
+        <svg viewBox="0 0 180 220" fill="none" role="img" aria-label="გველის ხაზოვანი ილუსტრაცია">
+          <g stroke="#c66b4e" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M107 195 C65 183 61 157 91 143 C125 128 125 106 91 100 C55 93 57 68 87 55 C108 45 120 32 106 21"/>
+            <path d="M105 195 C132 182 138 162 117 148" opacity=".7"/>
+            <path d="M106 21 C117 8 137 12 140 25 C143 38 129 45 117 38 C111 34 112 28 118 25"/>
+            <path d="M139 25 L151 21 L143 32 Z" fill="#c66b4e" fill-opacity=".6"/>
+            <circle cx="132" cy="23" r="1.7" fill="#f1c08c" stroke="none"/>
+            <path d="M143 32 L150 38 M143 32 L141 40" stroke="#e6a06e" stroke-width=".8"/>
+            <path d="M87 55 C100 67 103 81 91 100"/>
+            <path d="M75 62 L85 68 M71 70 L82 76 M72 80 L84 85" opacity=".6"/>
+            <path d="M78 110 L88 115 M84 120 L96 124 M84 133 L96 136" opacity=".6"/>
+            <path d="M74 158 L85 161 M78 169 L91 172 M91 181 L104 184" opacity=".6"/>
+          </g>
+        </svg>
+      </div>
+      <div>
+        <h3 class="name">აიდა</h3>
+        <div class="role">გველი · ნება და უხილავი ხმა</div>
+        <p class="description">
+          აიდა მიზნისკენ შეუჩერებლად მიდის. ჩიხშიც გამოსავალს ეძებს და არ ელოდება, რომ
+          ვინმე გადაარჩენს. მაგრამ მას უხილავი ხმა მიუძღვის — ძალა, რომელსაც ბოლომდე ვერ
+          ხედავს. აიდას სურს თავად ითამაშოს და არა სხვის თამაშში ფიგურად დარჩეს; თუმცა
+          მისმა ბრძოლამ შეიძლება სწორედ იმ ძალის ნაწილი გახადოს, რომელსაც ეწინააღმდეგება.
+        </p>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section class="quotes">
+  <div class="quotes-inner">
+    <div class="quotes-heading reveal">
+      <div class="section-kicker">ტექსტიდან</div>
+      <h2 class="section-title">სიტყვები, რომლებიც რჩებიან.</h2>
     </div>
-  </section>
+    <div class="quote-flow">
+      <blockquote class="quote reveal">
+        <span class="quote-mark">“</span>
+        იყო არაფერი.
+      </blockquote>
+      <blockquote class="quote reveal">
+        <span class="quote-mark">“</span>
+        რასაც კლავთ, ბოლოს იმას ემსგავსებით.
+      </blockquote>
+      <blockquote class="quote reveal">
+        <span class="quote-mark">“</span>
+        ცოდნა და სიმშვიდე შენი ნიჭია, თუნდაც სიკვდილი ახლოს იდგეს.
+      </blockquote>
+      <blockquote class="quote reveal">
+        <span class="quote-mark">“</span>
+        სიკვდილი თავისას მაინც წაიღებს.
+      </blockquote>
+      <blockquote class="quote reveal">
+        <span class="quote-mark">“</span>
+        თქვა თვალმა: იყოს ნათელი! და იქმნა ნათელი.
+      </blockquote>
+      <blockquote class="quote reveal">
+        <span class="quote-mark">“</span>
+        ჯერ არც სიტყვა იყო და არც ხმა — უფრო შეგრძნება. გაბრიელამდე მხოლოდ მისი ნარჩენი აღწევდა.
+      </blockquote>
+      <blockquote class="quote reveal">
+        <span class="quote-mark">“</span>
+        თითქოს ცხენზე კი არა, საკუთარ სხეულში იჯდა, თუმცა არც იქ იცოდა, როგორ აღმოჩნდა.
+      </blockquote>
+      <blockquote class="quote reveal">
+        <span class="quote-mark">“</span>
+        — ლილი, გაიღვიძე!
+      </blockquote>
+    </div>
+  </div>
+</section>
+
+<section class="chapters-section" id="chapters">
+  <div class="chapters-wrap">
+    <div class="chapters-top reveal">
+      <div class="intro">
+        <div class="section-kicker">წიგნის სტრუქტურა</div>
+        <h2 class="section-title">წიგნის თავები</h2>
+        <p>აირჩიე თავი, რომ გახსნა მისი გვერდი. ამჟამად აქ წარმოდგენილია თავების სია; სრული ტექსტები მოგვიანებით უნდა დაემატოს.</p>
+      </div>
+      <a class="purchase" href="#purchase"><span>↗</span> შეძენა</a>
+    </div>
+
+    <div class="chapter-groups" id="chapter-groups"></div>
+
+    <div class="purchase-note" id="purchase">
+      წიგნის შეძენის ბმული აქ დაემატება, როგორც კი აირჩევ პლატფორმას ან გაყიდვის გვერდს.
+    </div>
+  </div>
+</section>
+
+<section id="feedback">
+  <div class="feedback">
+    <div class="feedback-layout">
+      <div class="feedback-copy reveal">
+        <div class="section-kicker">მკითხველის ხმა</div>
+        <h2 class="section-title">რა დაგრჩა წაკითხვის შემდეგ?</h2>
+        <p>რომელიმე პერსონაჟმა შეგაცვლევინა აზრი? კითხვამ უპასუხოდ დაგტოვა? ან უბრალოდ გინდა, შენი შთაბეჭდილება გაუზიარო ავტორს — შეგიძლია აქ დაწერო.</p>
+      </div>
+      <form class="feedback-form reveal" action="https://formsubmit.co/YOUR_EMAIL@example.com" method="POST">
+        <input type="hidden" name="_subject" value="მკითხველის უკუკავშირი — არსად">
+        <input type="hidden" name="_captcha" value="true">
+        <input type="hidden" name="_template" value="table">
+        <div class="field">
+          <label for="reader-name">სახელი (არასავალდებულო)</label>
+          <input id="reader-name" type="text" name="სახელი" placeholder="როგორ მოგმართოთ?">
+        </div>
+        <div class="field">
+          <label for="reader-email">ელფოსტა (არასავალდებულო)</label>
+          <input id="reader-email" type="email" name="ელფოსტა" placeholder="თუ პასუხის მიღება გსურს">
+        </div>
+        <div class="field">
+          <label for="reader-message">შენი შთაბეჭდილება</label>
+          <textarea id="reader-message" name="უკუკავშირი" required placeholder="დაწერე, რაც დაგრჩა ამ სამყაროდან..."></textarea>
+        </div>
+        <button class="send" type="submit">გაგზავნა ↗</button>
+        <div class="form-note">ფორმის გასააქტიურებლად კოდში YOUR_EMAIL@example.com უნდა შეიცვალოს შენი ელფოსტით.</div>
+      </form>
+    </div>
+  </div>
+</section>
 </main>
 
 <footer>
-  <strong>არსად</strong>
-  <span>ვასიკო ზუმბაძე · ყველა უფლება დაცულია</span>
+  <div class="footer-title">არსად</div>
+  <div class="footer-line">რაც მთავრდება, შესაძლოა, მხოლოდ ბრუნდებოდეს.</div>
+  <div class="copyright">ვასიკო ზუმბაძე · ყველა უფლება დაცულია</div>
 </footer>
 
 <script>
-/* ცეცხლის ნაწილაკები და ნაკვერცხლები */
-(() => {
-  const canvas = document.getElementById("fire");
-  const ctx = canvas.getContext("2d");
-  if (!ctx) return;
+const chapterGroups = [
+{
+ title:"I — შექმნა და დაცემა",
+ chapters:[
+ ["პროლოგი",""],
+ ["I","სამი ნაყოფი"],["II","დაბადება და სიკვდილი"],
+ ["III","გზა ჩემი და გზა უფლისა"],["IV","ცოდვის საწყისი, ვნება"],
+ ["V","საფასური"],["VI","გარდაუვალის ხმა"],
+ ["VII","ქაოსი ქმნის"],["VIII","ეჭვი"],["IX","დაცემული წესრიგი"],
+ ["X","სულის მასა"],["XI","ქარი წაიღებს"],["XII","სამარე"],
+ ["XIII","ჩრდილთა სამება"],["XIV","ნადირობა"],["XV","აღდგომა"],
+ ["XVI","თოვს"],["XVII","არსობა"],["XVIII","ტყემ იცის"],
+ ["XIX","სისხლის კანონი"],["XX","უკანასკნელი სუნთქვა"]
+ ]
+},
+{
+ title:"II — რწმენა და გარდაქმნა",
+ chapters:[
+ ["XXI","რიტუალი"],["XXII","მარილი და რკინა"],
+ ["XXIII","წინასწარმეტყველება"],["XXIV","გარდაქმნა"],
+ ["XXV","რაც დაწერილია"],["XXVI","რწმენა სხეულის გარეშე"],
+ ["XXVII","ფერფლი"],["XXVIII","მეთვალყურეთა წიგნი"],
+ ["XXIX","ვერცხლი"],["XXX","შვიდი ჟამის გალობა"],
+ ["XXXI","ჟამის 1/7"],["XXXII","ჟამის 2/7"],
+ ["XXXIII","ჟამის 3/7"],["XXXIV","ჟამის 4/7"],
+ ["XXXV","ჟამის 5/7"],["XXXVI","ჟამის 6/7"],
+ ["XXXVII","სრული ჟამი"]
+ ]
+},
+{
+ title:"III — დაბრუნება და საიდუმლო",
+ chapters:[
+ ["XXXVIII","რაც მკვდარია..."],["XXXIX","თვალიდან"],
+ ["XL","ნეკნამდე"],["XLI","იეფთეს ქალიშვილი"],
+ ["XLII","ევას ხაზი"],["XLIII","წმინდა გრაალი"],
+ ["XLIV","მოკვეთილი"],["XLV","ადამის ხაზი"],
+ ["XLVI","ძე"],["XLVII","კურეტების ცეკვა"]
+ ]
+}
+];
 
-  let w = 0, h = 0, dpr = 1, particles = [];
-  let last = 0;
+const groupsContainer = document.getElementById("chapter-groups");
+chapterGroups.forEach((group, groupIndex) => {
+  const section = document.createElement("div");
+  section.className = "chapter-group reveal";
+  const heading = document.createElement("h3");
+  heading.textContent = group.title;
+  section.appendChild(heading);
+  const list = document.createElement("ol");
+  list.className = "chapter-list";
 
-  function particle(initial = false) {
-    const fireZone = Math.random() < .78;
-    return {
-      x: Math.random() * w,
-      y: initial ? Math.random() * h : h + Math.random() * 30,
-      vx: (Math.random() - .5) * 1.1,
-      vy: -(Math.random() * 2.2 + .45),
-      size: Math.random() * 2.4 + .5,
-      life: 0,
-      max: Math.random() * 160 + 90,
-      hue: Math.random() < .7 ? 16 : 3,
-      alpha: Math.random() * .7 + .2,
-      wave: Math.random() * Math.PI * 2,
-      fireZone
-    };
-  }
-
-  function resize() {
-    w = innerWidth;
-    h = innerHeight;
-    dpr = Math.min(devicePixelRatio || 1, 1.5);
-    canvas.width = w * dpr;
-    canvas.height = h * dpr;
-    canvas.style.width = w + "px";
-    canvas.style.height = h + "px";
-    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-
-    const count = w < 650 ? 95 : 175;
-    particles = Array.from({length: count}, () => particle(true));
-  }
-
-  function draw(time = 0) {
-    requestAnimationFrame(draw);
-    if (time - last < 24) return;
-    last = time;
-
-    ctx.clearRect(0, 0, w, h);
-
-    /* ალი ქვედა კიდეზე — რამდენიმე მოძრავი სინათლის ფენა */
-    const flicker = Math.sin(time * .004) * 10;
-    const fireHeight = h * .26 + flicker;
-
-    const glow = ctx.createRadialGradient(
-      w * .5, h + 15, 0,
-      w * .5, h + 15, h * .62
-    );
-    glow.addColorStop(0, "rgba(255,67,19,.17)");
-    glow.addColorStop(.32, "rgba(177,26,12,.10)");
-    glow.addColorStop(1, "rgba(0,0,0,0)");
-
-    ctx.fillStyle = glow;
-    ctx.fillRect(0, h - fireHeight, w, fireHeight);
-
-    /* ალის მოძრავი ენები */
-    for (let i = 0; i < 12; i++) {
-      const x = w * (i / 11);
-      const sway = Math.sin(time * .0018 + i * 1.7) * 35;
-      const tall = fireHeight * (.35 + .45 * (Math.sin(time * .003 + i) + 1) / 2);
-      const gradient = ctx.createLinearGradient(
-        x + sway, h, x - sway * .5, h - tall
-      );
-      gradient.addColorStop(0, "rgba(255,51,10,.12)");
-      gradient.addColorStop(.35, "rgba(255,83,24,.09)");
-      gradient.addColorStop(1, "rgba(255,85,24,0)");
-
-      ctx.beginPath();
-      ctx.moveTo(x - w / 16, h);
-      ctx.quadraticCurveTo(x + sway, h - tall * .55, x + sway * .2, h - tall);
-      ctx.quadraticCurveTo(x + w / 20, h - tall * .35, x + w / 16, h);
-      ctx.closePath();
-      ctx.fillStyle = gradient;
-      ctx.fill();
-    }
-
-    for (let i = 0; i < particles.length; i++) {
-      const p = particles[i];
-      p.life++;
-      p.x += p.vx + Math.sin(time * .0014 + p.wave) * .45;
-      p.y += p.vy;
-      p.vy -= .001;
-      p.vx += Math.sin(time * .001 + p.wave) * .006;
-
-      const fade = Math.min(1, p.life / 20, (p.max - p.life) / 30);
-      const a = Math.max(0, p.alpha * fade);
-
-      if (p.life > p.max || p.y < -20 || p.x < -20 || p.x > w + 20) {
-        particles[i] = particle();
-        continue;
-      }
-
-      ctx.beginPath();
-      ctx.fillStyle = `hsla(${p.hue},100%,${48 + Math.sin(time*.003+p.wave)*15}%,${a})`;
-      ctx.shadowBlur = p.size * 6;
-      ctx.shadowColor = p.hue < 10 ? "#ff2b15" : "#ff782b";
-      ctx.arc(p.x, p.y, p.size * fade, 0, Math.PI * 2);
-      ctx.fill();
-    }
-
-    ctx.shadowBlur = 0;
-  }
-
-  resize();
-  window.addEventListener("resize", resize, {passive:true});
-  requestAnimationFrame(draw);
-})();
-
-/* თავების ჩამონათვალი */
-(() => {
-  const groups = [
-    {
-      title: "I — შექმნა და დაცემა",
-      chapters: [
-        "პროლოგი",
-        "I. სამი ნაყოფი",
-        "II. დაბადება და სიკვდილი",
-        "III. გზა ჩემი და გზა უფლისა",
-        "IV. ცოდვის საწყისი, ვნება",
-        "V. საფასური",
-        "VI. გარდაუვალის ხმა",
-        "VII. ქაოსი ქმნის",
-        "VIII. ეჭვი",
-        "IX. დაცემული წესრიგი",
-        "X. სულის მასა",
-        "XI. ქარი წაიღებს",
-        "XII. სამარე",
-        "XIII. ჩრდილთა სამება",
-        "XIV. ნადირობა",
-        "XV. აღდგომა",
-        "XVI. თოვს"
-      ]
-    },
-    {
-      title: "II — რწმენა და გარდაქმნა",
-      chapters: [
-        "XVII. არსობა",
-        "XVIII. ტყემ იცის",
-        "XIX. სისხლის კანონი",
-        "XX. უკანასკნელი სუნთქვა",
-        "XXI. რიტუალი",
-        "XXII. მარილი და რკინა",
-        "XXIII. წინასწარმეტყველება",
-        "XXIV. გარდაქმნა",
-        "XXV. რაც დაწერილია",
-        "XXVI. რწმენა სხეულის გარეშე",
-        "XXVII. ფერფლი",
-        "XXVIII. მეთვალყურეთა წიგნი",
-        "XXIX. ვერცხლი",
-        "XXX. შვიდი ჟამის გალობა",
-        "XXXI. ჟამის 1/7",
-        "XXXII. ჟამის 2/7",
-        "XXXIII. ჟამის 3/7",
-        "XXXIV. ჟამის 4/7",
-        "XXXV. ჟამის 5/7",
-        "XXXVI. ჟამის 6/7",
-        "XXXVII. სრული ჟამი"
-      ]
-    },
-    {
-      title: "III — დაბრუნება და საიდუმლო",
-      chapters: [
-        "XXXVIII. რაც მკვდარია...",
-        "XXXIX. თვალიდან",
-        "XL. ნეკნამდე",
-        "XLI. იეფთეს ქალიშვილი",
-        "XLII. ევას ხაზი",
-        "XLIII. წმინდა გრაალი",
-        "XLIV. მოკვეთილი",
-        "XLV. ადამის ხაზი",
-        "XLVI. ძე",
-        "XLVII. კურეტების ცეკვა"
-      ]
-    }
-  ];
-
-  const root = document.getElementById("chapter-groups");
-  const detail = document.getElementById("chapter-detail");
-  const name = document.getElementById("chapter-name");
-
-  groups.forEach((group, index) => {
-    const wrapper = document.createElement("section");
-    wrapper.className = "chapter-group";
-
+  group.chapters.forEach((chapter, chapterIndex) => {
+    const [number, name] = chapter;
+    const li = document.createElement("li");
     const button = document.createElement("button");
-    button.className = "chapter-toggle";
+    button.className = "chapter-button";
     button.type = "button";
     button.setAttribute("aria-expanded", "false");
 
-    const label = document.createElement("span");
-    label.textContent = group.title;
+    const num = document.createElement("span");
+    num.className = "chapter-num";
+    num.textContent = number || "—";
 
-    const icon = document.createElement("span");
-    icon.textContent = "+";
+    const title = document.createElement("span");
+    title.className = "chapter-name";
+    title.textContent = name || "პროლოგი";
 
-    button.append(label, icon);
+    const plus = document.createElement("span");
+    plus.className = "plus";
+    plus.textContent = "+";
+    plus.setAttribute("aria-hidden", "true");
 
-    const list = document.createElement("div");
-    list.className = "chapter-list";
+    button.append(num, title, plus);
+
+    const content = document.createElement("div");
+    content.className = "chapter-content";
+    const note = document.createElement("div");
+    note.className = "read-note";
+    note.textContent = "ამ თავის ტექსტი ჯერ არ არის დამატებული.";
+    content.appendChild(note);
 
     button.addEventListener("click", () => {
-      const willOpen = !wrapper.classList.contains("open");
-
-      root.querySelectorAll(".chapter-group").forEach(item => {
-        item.classList.remove("open");
-        item.querySelector(".chapter-toggle").setAttribute("aria-expanded", "false");
-        item.querySelector(".chapter-toggle span:last-child").textContent = "+";
-      });
-
-      if (willOpen) {
-        wrapper.classList.add("open");
-        button.setAttribute("aria-expanded", "true");
-        icon.textContent = "−";
-      }
+      const isOpen = button.getAttribute("aria-expanded") === "true";
+      button.setAttribute("aria-expanded", String(!isOpen));
+      content.classList.toggle("open", !isOpen);
     });
 
-    group.chapters.forEach(chapter => {
-      const link = document.createElement("button");
-      link.type = "button";
-      link.className = "chapter-link";
-      link.textContent = chapter;
-
-      link.addEventListener("click", () => {
-        root.querySelectorAll(".chapter-link").forEach(item => item.classList.remove("active"));
-        link.classList.add("active");
-        name.textContent = chapter;
-        detail.classList.add("visible");
-        document.getElementById("chapter-note").textContent =
-          "ამ თავის ტექსტი ჯერ არ არის დამატებული. სათაური შენარჩუნებულია შენი ჩამონათვალის მიხედვით.";
-        detail.scrollIntoView({behavior:"smooth", block:"center"});
-      });
-
-      list.appendChild(link);
-    });
-
-    wrapper.append(button, list);
-    root.appendChild(wrapper);
+    li.append(button, content);
+    list.appendChild(li);
   });
-})();
 
-/* რბილი გამოჩენა ჩამოსქროლვისას */
-(() => {
-  const elements = document.querySelectorAll(".reveal");
+  section.appendChild(list);
+  groupsContainer.appendChild(section);
+});
 
-  if (!("IntersectionObserver" in window)) {
-    elements.forEach(el => el.classList.add("visible"));
-    return;
+/* ცოცხალი ნაპერწკლები */
+const canvas = document.getElementById("embers");
+const ctx = canvas.getContext("2d");
+let w = 0, h = 0, particles = [];
+const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+function resizeCanvas(){
+  const dpr = Math.min(window.devicePixelRatio || 1, 2);
+  w = window.innerWidth;
+  h = window.innerHeight;
+  canvas.width = w * dpr;
+  canvas.height = h * dpr;
+  canvas.style.width = w + "px";
+  canvas.style.height = h + "px";
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+}
+function makeEmber(initial = false){
+  return {
+    x:Math.random()*w,
+    y:initial ? Math.random()*h : h + Math.random()*50,
+    size:Math.random()*1.8+.3,
+    vx:(Math.random()-.5)*.55,
+    vy:-(Math.random()*.9+.25),
+    life:Math.random()*180+90,
+    age:0,
+    sway:Math.random()*Math.PI*2,
+    glow:Math.random()*.7+.3
+  };
+}
+function initEmbers(){
+  particles = [];
+  const count = Math.min(180, Math.floor(w/7));
+  for(let i=0;i<count;i++) particles.push(makeEmber(true));
+}
+function drawEmbers(){
+  ctx.clearRect(0,0,w,h);
+  for(let i=0;i<particles.length;i++){
+    const p=particles[i];
+    p.age++;
+    p.sway+=.018;
+    p.x+=p.vx+Math.sin(p.sway)*.35;
+    p.y+=p.vy;
+    const lifeFade=Math.min(1,p.age/18, (p.life-p.age)/30);
+    const alpha=Math.max(0,lifeFade)*p.glow;
+    if(alpha>0){
+      ctx.beginPath();
+      ctx.fillStyle=`rgba(255,${Math.floor(90+p.glow*90)},${Math.floor(35+p.glow*50)},${alpha})`;
+      ctx.shadowBlur=9*p.glow;
+      ctx.shadowColor="rgba(255,85,28,.8)";
+      ctx.arc(p.x,p.y,p.size,0,Math.PI*2);
+      ctx.fill();
+    }
+    if(p.y < -20 || p.age>p.life || p.x < -30 || p.x > w+30) particles[i]=makeEmber();
   }
+  ctx.shadowBlur=0;
+  if(!reducedMotion) requestAnimationFrame(drawEmbers);
+}
+resizeCanvas();
+initEmbers();
+if(!reducedMotion) drawEmbers();
+window.addEventListener("resize",()=>{resizeCanvas();initEmbers()});
 
-  const observer = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add("visible");
-        observer.unobserve(entry.target);
-      }
+/* მაუსის მოძრაობაზე მოკლე ნაპერწკლების კვალი */
+let lastSpark = 0;
+window.addEventListener("pointermove", e => {
+  const now=performance.now();
+  if(now-lastSpark<38 || reducedMotion) return;
+  lastSpark=now;
+  for(let i=0;i<2;i++){
+    particles.push({
+      x:e.clientX+(Math.random()-.5)*10,
+      y:e.clientY+(Math.random()-.5)*10,
+      size:Math.random()*1.7+.5,
+      vx:(Math.random()-.5)*1.6,
+      vy:Math.random()*1.1+.25,
+      life:Math.random()*24+15,age:0,sway:0,glow:.9
     });
-  }, {threshold:.12});
+  }
+  if(particles.length>260) particles.splice(0,particles.length-260);
+});
 
-  elements.forEach(el => observer.observe(el));
-})();
+/* ბუნებრივი გამოჩენა სქროლისას */
+const revealObserver = new IntersectionObserver(entries=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){
+      entry.target.classList.add("visible");
+      revealObserver.unobserve(entry.target);
+    }
+  });
+},{threshold:.12});
+document.querySelectorAll(".reveal").forEach(el=>revealObserver.observe(el));
+
+/* უკუკავშირის ვალიდაცია */
+document.querySelector(".feedback-form").addEventListener("submit", e=>{
+  const action=e.currentTarget.getAttribute("action");
+  if(action.includes("YOUR_EMAIL@example.com")){
+    e.preventDefault();
+    alert("უკუკავშირის გასაგზავნად ჯერ კოდში YOUR_EMAIL@example.com შეცვალე შენი ელფოსტით.");
+  }
+});
 </script>
 </body>
 </html>
